@@ -1,0 +1,756 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- النافذة المنبثقة للترحيب -->
+<div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden welcome-popup">
+            <div class="modal-body p-0">
+                <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="text-center p-4">
+                    <div class="welcome-icon mb-3 mx-auto">
+                        <img src="{{ url_for('static', filename='img/telegram-logo.svg') }}" class="img-fluid float-animation" alt="شعار تلجرام">
+                    </div>
+                    <h3 class="fw-bold text-primary mb-3">أهلاً بك في بوت التوجيه المتطور!</h3>
+                    <p class="lead mb-4">مرحباً بك في منصة إدارة رسائل تلجرام الذكية. اكتشف قوة التوجيه الذكي، الفلترة المتقدمة، والترجمة التلقائية في مكان واحد.</p>
+                    <div class="d-grid gap-2 col-md-8 mx-auto">
+                        <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg pulse-animation">
+                            <i class="fas fa-sign-in-alt me-2"></i> تسجيل الدخول
+                        </a>
+                        <a href="{{ url_for('guest_features') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-info-circle me-2"></i> اكتشف المميزات
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- تنسيقات إضافية للنافذة المنبثقة -->
+<style>
+.welcome-popup {
+    background: linear-gradient(135deg, #ffffff, var(--primary-lightest));
+}
+
+.welcome-icon {
+    width: 100px;
+    height: 100px;
+    background-color: var(--primary-lightest);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(13, 110, 253, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+    }
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+</style>
+
+<!-- سكريبت لإظهار النافذة المنبثقة تلقائياً وإغلاقها -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // إظهار النافذة المنبثقة بعد 1.5 ثانية من تحميل الصفحة
+    setTimeout(function() {
+        var welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'));
+        welcomeModal.show();
+        
+        // إغلاق النافذة المنبثقة تلقائياً بعد 7 ثوانٍ
+        setTimeout(function() {
+            welcomeModal.hide();
+        }, 7000);
+    }, 1500);
+});
+</script>
+<!-- قسم الترويسة الرئيسية - Hero Section -->
+<div class="hero-section py-5 mb-5 position-relative">
+    <!-- إضافة خلفية متحركة -->
+    <div class="animated-background"></div>
+    
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-6 text-center text-lg-end mb-4 mb-lg-0">
+                <h1 class="display-4 fw-bold mb-3 text-gradient">مرحباً بك في منصة إدارة بوتات تلجرام المتطورة</h1>
+                <p class="lead mb-4 parallax-element parallax-up" data-parallax-speed="0.1">حل متكامل لتوجيه وإدارة الرسائل والوسائط بين قنوات تلجرام مع مزايا ذكية للتصفية والتخصيص</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg px-4 me-md-2 btn-neon">
+                        <i class="fas fa-sign-in-alt me-2"></i> تسجيل الدخول
+                    </a>
+                    <a href="#features" class="btn btn-outline-primary btn-lg px-4 btn-pulse">
+                        <i class="fas fa-info-circle me-2"></i> تعرف على المميزات
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="hero-image-container position-relative float-animation">
+                    <div class="hero-image-glow"></div>
+                    <img src="{{ url_for('static', filename='img/telegram-logo.svg') }}" alt="Telegram Bot Manager" class="img-fluid hero-image card-3d shadow rounded" style="max-width: 60%; background-color: #f8f9fa; padding: 2rem;">
+                </div>
+                <div class="hero-badges mt-3">
+                    <span class="badge bg-primary rounded-pill me-2 hover-scale">الإصدار 2.0</span>
+                    <span class="badge bg-success rounded-pill me-2 hover-scale">دعم 24/7</span>
+                    <span class="badge bg-info rounded-pill hover-scale">سهل الاستخدام</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* تنسيقات إضافية خاصة بالصفحة الرئيسية */
+.hero-section {
+    background: none;
+    overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero-image-container {
+    display: inline-block;
+    perspective: 1000px;
+}
+
+.hero-image-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(circle, rgba(13, 110, 253, 0.2) 0%, rgba(13, 110, 253, 0) 70%);
+    filter: blur(20px);
+    z-index: -1;
+    animation: glow 3s infinite alternate;
+}
+
+@keyframes glow {
+    0% {
+        opacity: 0.5;
+        width: 70%;
+        height: 70%;
+    }
+    100% {
+        opacity: 1;
+        width: 80%;
+        height: 80%;
+    }
+}
+
+/* تحديد المتغير --primary-rgb للاستخدام في التأثيرات */
+:root {
+    --primary-rgb: 13, 110, 253;
+}
+</style>
+
+<!-- قسم المميزات المتقدمة - Features Section -->
+<section id="features" class="py-5 rounded shadow-sm mb-5 position-relative features-section">
+    <!-- عناصر الزخرفة المتحركة -->
+    <div class="features-decoration">
+        <div class="floating-element elem1"><i class="fas fa-comments"></i></div>
+        <div class="floating-element elem2"><i class="fas fa-globe"></i></div>
+        <div class="floating-element elem3"><i class="fas fa-cog"></i></div>
+        <div class="floating-element elem4"><i class="fas fa-bolt"></i></div>
+    </div>
+    
+    <div class="container position-relative">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="fw-bold text-gradient"><i class="fas fa-rocket me-2 pulse-element"></i>المميزات المتقدمة</h2>
+                <p class="lead text-muted mb-0">اكتشف القدرات الفريدة التي تجعل بوت التوجيه الخاص بنا الأفضل في السوق</p>
+                <div class="custom-shape-divider"></div>
+            </div>
+        </div>
+
+        <div class="row g-4 fade-in-element">
+            <div class="col-md-4">
+                <div class="feature-card card-3d text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="card-content">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-exchange-alt fa-3x text-primary"></i>
+                        </div>
+                        <h4 class="card-title">توجيه ذكي للرسائل</h4>
+                        <p class="text-muted">توجيه الرسائل بين القنوات بذكاء مع خيارات متعددة للنسخ المباشر أو الإعادة مع المصدر.</p>
+                        <div class="feature-icon-bg">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card card-3d text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="card-content">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-filter fa-3x text-primary"></i>
+                        </div>
+                        <h4 class="card-title">فلاتر متقدمة</h4>
+                        <p class="text-muted">تصفية الرسائل حسب اللغة، الكلمات المفتاحية، نوع الوسائط، ومنع المحتوى غير المرغوب فيه.</p>
+                        <div class="feature-icon-bg">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card card-3d text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="card-content">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-language fa-3x text-primary"></i>
+                        </div>
+                        <h4 class="card-title">ترجمة تلقائية</h4>
+                        <p class="text-muted">ترجمة الرسائل تلقائيًا بين اللغات المختلفة قبل توجيهها لتوسيع نطاق جمهورك.</p>
+                        <div class="feature-icon-bg">
+                            <i class="fas fa-language"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card card-3d text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="card-content">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-pen-fancy fa-3x text-primary"></i>
+                        </div>
+                        <h4 class="card-title">تخصيص النصوص</h4>
+                        <p class="text-muted">استبدال نصوص محددة وتعديل محتوى الرسائل قبل توجيهها، بما في ذلك إزالة الروابط غير المرغوب فيها.</p>
+                        <div class="feature-icon-bg">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card card-3d text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="card-content">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-clock fa-3x text-primary"></i>
+                        </div>
+                        <h4 class="card-title">جدولة وتأخير</h4>
+                        <p class="text-muted">ضبط أوقات التوجيه وإضافة تأخير بين الرسائل للتحكم في معدل النشر والعمل في أوقات محددة.</p>
+                        <div class="feature-icon-bg">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card card-3d text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="card-content">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-chart-line fa-3x text-primary"></i>
+                        </div>
+                        <h4 class="card-title">إحصائيات متكاملة</h4>
+                        <p class="text-muted">مراقبة أداء البوت مع إحصائيات دقيقة حول الرسائل الموجهة والأخطاء والنشاط اليومي.</p>
+                        <div class="feature-icon-bg">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- زر التفاعل مع المميزات -->
+        <div class="text-center mt-5">
+            <a href="{{ url_for('guest_features') }}" class="btn btn-lg btn-primary btn-neon">
+                <i class="fas fa-th-list me-2"></i> استعراض جميع المميزات بالتفصيل
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+/* تنسيقات قسم المميزات */
+.features-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    overflow: hidden;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+}
+
+.custom-shape-divider {
+    width: 150px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--primary), transparent);
+    margin: 1.5rem auto;
+}
+
+.feature-card {
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.feature-card .card-content {
+    position: relative;
+    z-index: 1;
+}
+
+.feature-card .feature-icon-bg {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    font-size: 8rem;
+    opacity: 0.05;
+    transform: rotate(-15deg);
+    transition: all 0.5s ease;
+    z-index: 0;
+}
+
+.feature-card:hover .feature-icon-bg {
+    transform: rotate(0deg) scale(1.2);
+    opacity: 0.08;
+}
+
+/* عناصر الزخرفة المتحركة */
+.features-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.floating-element {
+    position: absolute;
+    font-size: 2rem;
+    color: rgba(13, 110, 253, 0.1);
+    z-index: 0;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.floating-element i {
+    font-size: 4rem;
+}
+
+.elem1 {
+    top: 10%;
+    left: 5%;
+    animation-name: float-1;
+}
+
+.elem2 {
+    top: 20%;
+    right: 5%;
+    animation-name: float-2;
+}
+
+.elem3 {
+    bottom: 15%;
+    left: 10%;
+    animation-name: float-3;
+}
+
+.elem4 {
+    bottom: 20%;
+    right: 10%;
+    animation-name: float-4;
+}
+
+@keyframes float-1 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(20px, 20px) rotate(180deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes float-2 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-20px, 20px) rotate(-180deg); }
+    100% { transform: translate(0, 0) rotate(-360deg); }
+}
+
+@keyframes float-3 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(20px, -20px) rotate(180deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes float-4 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-20px, -20px) rotate(-180deg); }
+    100% { transform: translate(0, 0) rotate(-360deg); }
+}
+</style>
+
+<script>
+// تهيئة تأثيرات البطاقات ثلاثية الأبعاد
+document.addEventListener('DOMContentLoaded', function() {
+    // تهيئة تأثيرات البطاقات ثلاثية الأبعاد
+    init3DCardEffects();
+    
+    // تفعيل تأثير الظهور عند التمرير
+    const fadeElements = document.querySelectorAll('.fade-in-element');
+    
+    const fadeInObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    fadeElements.forEach(element => {
+        fadeInObserver.observe(element);
+    });
+});
+</script>
+
+<!-- قسم خطط الاشتراك - Pricing Section -->
+<section class="pricing-section py-5 mb-5">
+    <div class="container">
+        <div class="row text-center mb-4">
+            <div class="col-12">
+                <h2 class="fw-bold"><i class="fas fa-tags me-2"></i>باقات الاشتراك</h2>
+                <p class="text-muted">خطط مرنة لتناسب احتياجاتك مهما كان حجم قنواتك</p>
+            </div>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="card pricing-card h-100 shadow-sm">
+                    <div class="card-header bg-light text-center py-3">
+                        <h4 class="fw-bold mb-0">الباقة الأساسية</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2 class="card-title pricing-card-title mb-4">$9.99<small class="text-muted fw-light">/شهريًا</small></h2>
+                        <ul class="list-unstyled mt-3 mb-4 text-start">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>قناة مصدر واحدة</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>قناة هدف واحدة</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>توجيه حتى 1,000 رسالة يوميًا</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>الفلاتر الأساسية</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>دعم عبر البريد الإلكتروني</li>
+                            <li class="mb-2 text-muted"><i class="fas fa-times text-danger me-2"></i>الترجمة التلقائية</li>
+                            <li class="mb-2 text-muted"><i class="fas fa-times text-danger me-2"></i>التوجيه المجدول</li>
+                        </ul>
+                        <button class="w-100 btn btn-outline-primary btn-lg">ابدأ الآن</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card pricing-card h-100 shadow border-primary">
+                    <div class="card-header bg-primary text-white text-center py-3">
+                        <span class="badge bg-warning float-end">الأكثر شعبية</span>
+                        <h4 class="fw-bold mb-0">الباقة الاحترافية</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2 class="card-title pricing-card-title mb-4">$24.99<small class="text-muted fw-light">/شهريًا</small></h2>
+                        <ul class="list-unstyled mt-3 mb-4 text-start">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>حتى 3 قنوات مصدر</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>حتى 3 قنوات هدف</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>توجيه غير محدود للرسائل</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>جميع الفلاتر المتقدمة</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>الترجمة التلقائية</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>دعم فني على مدار الساعة</li>
+                            <li class="mb-2 text-muted"><i class="fas fa-times text-danger me-2"></i>واجهة برمجة التطبيقات API</li>
+                        </ul>
+                        <button class="w-100 btn btn-primary btn-lg">اشترك الآن</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card pricing-card h-100 shadow-sm">
+                    <div class="card-header bg-light text-center py-3">
+                        <h4 class="fw-bold mb-0">الباقة المؤسسية</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2 class="card-title pricing-card-title mb-4">$59.99<small class="text-muted fw-light">/شهريًا</small></h2>
+                        <ul class="list-unstyled mt-3 mb-4 text-start">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>قنوات غير محدودة</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>توجيه غير محدود</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>جميع المميزات المتقدمة</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>واجهة برمجة التطبيقات API</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>تخصيص البوت بالكامل</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>دعم فني مع مدير حساب مخصص</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>تحليلات متقدمة للأداء</li>
+                        </ul>
+                        <button class="w-100 btn btn-outline-primary btn-lg">اتصل بنا</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- قسم عن المطور - Developer Section -->
+<section class="about-developer py-5 mb-5 bg-light rounded shadow-sm">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="fw-bold"><i class="fas fa-code me-2"></i>عن المطور</h2>
+                <p class="lead">منصة متكاملة تم تطويرها بواسطة فريق من المبرمجين ذوي الخبرة لتلبية احتياجات أصحاب القنوات والمسوقين.</p>
+                <p>نحن فريق متخصص في تطوير حلول تلجرام المتكاملة منذ 2019، نسعى دائمًا لتقديم أحدث التقنيات لعملائنا. يتكون فريقنا من مبرمجين ومصممين ومحللين يعملون معًا لتقديم تجربة استخدام مميزة.</p>
+                <div class="social-links mt-4">
+                    <a href="#" class="btn btn-outline-primary me-2"><i class="fab fa-telegram me-1"></i> قناة التحديثات</a>
+                    <a href="#" class="btn btn-outline-primary me-2"><i class="fab fa-twitter me-1"></i> تويتر</a>
+                    <a href="#" class="btn btn-outline-primary"><i class="fas fa-envelope me-1"></i> اتصل بنا</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center mt-4 mt-lg-0">
+                <div class="developer-stats p-4 bg-white rounded shadow">
+                    <div class="row g-3">
+                        <div class="col-4">
+                            <div class="stat-item">
+                                <h3 class="mb-0 text-primary">+5000</h3>
+                                <p class="mb-0 text-muted">عميل نشط</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-item">
+                                <h3 class="mb-0 text-primary">+10M</h3>
+                                <p class="mb-0 text-muted">رسالة يوميًا</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-item">
+                                <h3 class="mb-0 text-primary">99.9%</h3>
+                                <p class="mb-0 text-muted">وقت التشغيل</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="developer-commitment mt-4">
+                        <div class="card border-0 bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-shield-alt me-2 text-primary"></i>التزامنا بالحماية والخصوصية</h5>
+                                <p class="card-text">نولي أهمية قصوى لأمان وخصوصية بياناتك. نستخدم أحدث تقنيات التشفير وإجراءات الحماية للحفاظ على معلوماتك.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- قسم الاتصال - Contact Section -->
+<section class="contact-section py-5 mb-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow border-0">
+                    <div class="card-body text-center p-5">
+                        <h2 class="fw-bold mb-3"><i class="fas fa-headset me-2"></i>هل تحتاج للمساعدة؟</h2>
+                        <p class="lead mb-4">فريق الدعم الفني جاهز للإجابة على استفساراتك على مدار الساعة</p>
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="d-grid gap-3 d-md-flex justify-content-md-center">
+                                    <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-sign-in-alt me-2"></i> تسجيل الدخول
+                                    </a>
+                                    <a href="#" class="btn btn-outline-primary btn-lg">
+                                        <i class="fas fa-paper-plane me-2"></i> تواصل معنا
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- قسم المطور وحقوق الملكية - Developer Section -->
+<section class="developer-credit-section py-5 bg-primary text-white position-relative">
+    <!-- عناصر زخرفية متحركة -->
+    <div class="developer-decoration">
+        <div class="dev-element dev-elem1">
+            <i class="fas fa-code"></i>
+        </div>
+        <div class="dev-element dev-elem2">
+            <i class="fas fa-terminal"></i>
+        </div>
+        <div class="dev-element dev-elem3">
+            <i class="fab fa-telegram"></i>
+        </div>
+    </div>
+    
+    <div class="container position-relative">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="developer-card card-3d p-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-7">
+                            <div class="developer-info">
+                                <div class="dev-badge mb-3 d-inline-block">تطوير ✓</div>
+                                <h2 class="text-gradient-white mb-3 display-5 fw-bold">عدي الغولي</h2>
+                                <p class="lead mb-4">مطوّر بوتات تلجرام وخبير في تقنيات الويب المتقدمة. مبرمج مع خبرة واسعة في تطوير حلول التواصل الذكية والأتمتة.</p>
+                                <div class="d-grid gap-2 d-md-flex">
+                                    <a href="https://t.me/zwamlallaith" target="_blank" class="btn btn-primary btn-lg btn-neon">
+                                        <i class="fab fa-telegram me-2"></i> زيارة القناة
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 text-center mt-4 mt-md-0">
+                            <div class="developer-logo-container float-animation">
+                                <div class="developer-logo-glow"></div>
+                                <div class="developer-logo p-4 rounded-circle">
+                                    <i class="fab fa-telegram fa-6x text-primary"></i>
+                                </div>
+                                <div class="copyright-text mt-4">
+                                    <p class="mb-0 text-light">جميع الحقوق محفوظة &copy; 2025</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* تنسيقات قسم المطور */
+.developer-credit-section {
+    background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+    overflow: hidden;
+    position: relative;
+}
+
+.developer-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.developer-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.dev-badge {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+}
+
+.text-gradient-white {
+    background: linear-gradient(90deg, #ffffff, #e0e0e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+.developer-logo-container {
+    position: relative;
+    display: inline-block;
+}
+
+.developer-logo-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    z-index: 1;
+    animation: pulse 3s infinite alternate;
+}
+
+.developer-logo {
+    position: relative;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 140px;
+    height: 140px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+.developer-logo:hover {
+    transform: rotate(10deg) scale(1.05);
+}
+
+/* تنسيقات العناصر الزخرفية */
+.developer-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.dev-element {
+    position: absolute;
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.1);
+    z-index: 0;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.dev-element i {
+    font-size: 4rem;
+}
+
+.dev-elem1 {
+    top: 15%;
+    left: 10%;
+    animation-name: float-dev1;
+}
+
+.dev-elem2 {
+    top: 45%;
+    right: 5%;
+    animation-name: float-dev2;
+}
+
+.dev-elem3 {
+    bottom: 10%;
+    left: 20%;
+    animation-name: float-dev3;
+}
+
+@keyframes float-dev1 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(30px, 30px) rotate(180deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes float-dev2 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-30px, 30px) rotate(-180deg); }
+    100% { transform: translate(0, 0) rotate(-360deg); }
+}
+
+@keyframes float-dev3 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(30px, -30px) rotate(180deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+</style>
+{% endblock %}

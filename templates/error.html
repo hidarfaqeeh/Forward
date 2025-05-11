@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card error-page shadow">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0 text-center"><i class="fas fa-exclamation-triangle me-2"></i> حدث خطأ</h4>
+            </div>
+            <div class="card-body p-4 text-center">
+                <div class="mb-4">
+                    <i class="fas fa-bug fa-4x text-danger mb-3"></i>
+                    <h5 class="mb-3">نعتذر، حدثت مشكلة أثناء معالجة طلبك</h5>
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-primary me-2">
+                        <i class="fas fa-tachometer-alt me-1"></i> العودة إلى لوحة التحكم
+                    </a>
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                        <i class="fas fa-home me-1"></i> الصفحة الرئيسية
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

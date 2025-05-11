@@ -1,0 +1,451 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="login-bg py-5 position-relative cursor-effect-enabled">
+    <!-- خلفية متحركة للصفحة -->
+    <div class="animated-background"></div>
+    
+    <!-- العناصر الزخرفية المتحركة -->
+    <div class="login-decoration">
+        <div class="decoration-element d-elem1">
+            <i class="fas fa-paper-plane"></i>
+        </div>
+        <div class="decoration-element d-elem2">
+            <i class="fas fa-comments"></i>
+        </div>
+        <div class="decoration-element d-elem3">
+            <i class="fas fa-share-alt"></i>
+        </div>
+        <div class="decoration-element d-elem4">
+            <i class="fas fa-cog"></i>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="login-wrapper shadow-lg rounded-4 overflow-hidden card-3d">
+                    <div class="row g-0">
+                        <!-- صورة جانبية للتسجيل -->
+                        <div class="col-lg-5 d-none d-lg-block login-image-col position-relative overflow-hidden">
+                            <div class="login-image h-100">
+                                <div class="login-particles"></div>
+                                <div class="overlay d-flex flex-column justify-content-center text-center p-4">
+                                    <!-- هالة متوهجة خلف الشعار -->
+                                    <div class="logo-glow"></div>
+                                    <img src="{{ url_for('static', filename='img/telegram-logo.svg') }}" alt="Telegram Bot" class="img-fluid mb-4 float-animation" style="max-width: 100px; position: relative; z-index: 2;">
+                                    <h3 class="text-white mb-3 text-shadow">بوت تلجرام المتطور</h3>
+                                    <p class="text-white opacity-75 mb-4 parallax-element parallax-up" data-parallax-speed="0.1">الحل المثالي لإدارة وتوجيه الرسائل بين قنوات تلجرام مع ميزات متقدمة للتحكم والتصفية</p>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="{{ url_for('guest_features') }}" class="btn btn-light btn-pulse hover-scale">
+                                            <i class="fas fa-info-circle me-2"></i> اكتشف المميزات
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- نموذج تسجيل الدخول -->
+                        <div class="col-lg-7">
+                            <div class="login-form-section p-5">
+                                <div class="d-flex align-items-center mb-4">
+                                    <div class="logo-wrapper hover-rotate">
+                                        <img src="{{ url_for('static', filename='img/telegram-logo.svg') }}" alt="Telegram Bot" class="me-3" style="width: 40px;">
+                                    </div>
+                                    <h3 class="fw-bold text-gradient mb-0">مرحباً بك في لوحة التحكم</h3>
+                                </div>
+                                
+                                <p class="lead text-muted mb-4">يمكنك تسجيل الدخول باستخدام بيانات الاعتماد الخاصة بك أو استكشاف المميزات كضيف</p>
+                                
+                                <!-- زر التبديل بين تسجيل الدخول واستعراض المميزات -->
+                                <ul class="nav nav-pills nav-fill mb-4 tab-3d" id="loginOptions" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active btn-neon" id="admin-login-tab" data-bs-toggle="pill" data-bs-target="#admin-login" type="button" role="tab" aria-selected="true">
+                                            <i class="fas fa-user-shield me-2"></i> تسجيل دخول المشرف
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link btn-neon" id="guest-login-tab" data-bs-toggle="pill" data-bs-target="#guest-login" type="button" role="tab" aria-selected="false">
+                                            <i class="fas fa-user me-2"></i> تصفح كضيف
+                                        </button>
+                                    </li>
+                                </ul>
+                                
+                                <div class="tab-content tab-content-3d" id="loginOptionsContent">
+                                    <!-- تسجيل دخول المشرف -->
+                                    <div class="tab-pane fade show active card-content" id="admin-login" role="tabpanel">
+                                        <form action="{{ url_for('login') }}" method="post">
+                                            <div class="mb-4 input-wrapper">
+                                                <label for="username" class="form-label">اسم المستخدم</label>
+                                                <div class="input-group floating-input">
+                                                    <span class="input-group-text bg-light"><i class="fas fa-user text-primary"></i></span>
+                                                    <input type="text" class="form-control form-control-lg" id="username" name="username" required autofocus placeholder="أدخل اسم المستخدم">
+                                                    <div class="input-focus-bg"></div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-4 input-wrapper">
+                                                <div class="d-flex justify-content-between">
+                                                    <label for="password" class="form-label">كلمة المرور</label>
+                                                </div>
+                                                <div class="input-group floating-input">
+                                                    <span class="input-group-text bg-light"><i class="fas fa-lock text-primary"></i></span>
+                                                    <input type="password" class="form-control form-control-lg" id="password" name="password" required placeholder="أدخل كلمة المرور">
+                                                    <div class="input-focus-bg"></div>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid">
+                                                <button type="submit" class="btn btn-primary btn-lg btn-neon">
+                                                    <i class="fas fa-sign-in-alt me-2"></i> تسجيل الدخول
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                    <!-- تسجيل دخول ضيف -->
+                                    <div class="tab-pane fade card-content" id="guest-login" role="tabpanel">
+                                        <div class="text-center py-4">
+                                            <div class="mb-4">
+                                                <i class="fas fa-street-view fa-4x text-primary mb-3 pulse-element"></i>
+                                                <h5>تصفح كضيف</h5>
+                                                <p class="text-muted">يمكنك استكشاف مميزات البوت دون الحاجة لتسجيل الدخول</p>
+                                            </div>
+                                            <div class="d-grid gap-2">
+                                                <a href="{{ url_for('guest_features') }}" class="btn btn-outline-primary btn-lg btn-neon">
+                                                    <i class="fas fa-rocket me-2"></i> استعراض المميزات
+                                                </a>
+                                                <a href="{{ url_for('index') }}" class="btn btn-light hover-scale">
+                                                    <i class="fas fa-arrow-right me-2"></i> العودة للصفحة الرئيسية
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- تذييل نموذج تسجيل الدخول -->
+                                <div class="mt-4 text-center">
+                                    <p class="mb-0 text-muted small">
+                                        <i class="fas fa-shield-alt me-1"></i>
+                                        جميع البيانات مشفرة ومحمية. البيانات الافتراضية للدخول: admin/admin
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- عرض في الأجهزة الصغيرة فقط -->
+                <div class="d-block d-lg-none text-center mt-4">
+                    <a href="{{ url_for('guest_features') }}" class="btn btn-light hover-float">
+                        <i class="fas fa-info-circle me-2"></i> اكتشف مميزات البوت
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* تنسيقات خاصة بصفحة تسجيل الدخول */
+.login-bg {
+    background: linear-gradient(135deg, var(--primary-lightest) 0%, #ffffff 100%);
+    min-height: calc(100vh - 190px);
+    overflow: hidden;
+    position: relative;
+}
+
+.login-wrapper {
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s;
+    z-index: 2;
+}
+
+.login-image-col {
+    background: linear-gradient(45deg, var(--primary-dark), var(--primary));
+    overflow: hidden;
+    position: relative;
+}
+
+.login-image {
+    position: relative;
+    background-image: url('https://images.unsplash.com/photo-1611746872915-64382b5c76da?q=80&w=200');
+    background-size: cover;
+    background-position: center;
+}
+
+.login-image .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(13, 110, 253, 0.7), rgba(10, 88, 202, 0.9));
+    z-index: 1;
+}
+
+.text-shadow {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* تنسيقات جزيئات الخلفية */
+.login-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+}
+
+/* هالة متوهجة خلف الشعار */
+.logo-glow {
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+    z-index: 1;
+    animation: pulse 3s infinite alternate;
+}
+
+/* تنسيق حقول الإدخال */
+.floating-input {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.input-focus-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--info));
+    transition: width 0.3s ease;
+    z-index: 0;
+}
+
+.floating-input input:focus ~ .input-focus-bg {
+    width: 100%;
+}
+
+/* تنسيق التبويبات ثلاثية الأبعاد */
+.tab-3d {
+    perspective: 1000px;
+}
+
+.tab-3d .nav-link {
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+    position: relative;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    font-weight: 500;
+}
+
+.tab-3d .nav-link.active {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(13, 110, 253, 0.2);
+    background-color: var(--primary);
+}
+
+.tab-content-3d {
+    perspective: 1000px;
+}
+
+.tab-content-3d .tab-pane {
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    transform-origin: center center;
+}
+
+.tab-content-3d .tab-pane.show {
+    animation: tabFadeIn 0.5s forwards;
+}
+
+@keyframes tabFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* العناصر الزخرفية المتحركة */
+.login-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.decoration-element {
+    position: absolute;
+    font-size: 3rem;
+    color: rgba(13, 110, 253, 0.1);
+    z-index: 0;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.decoration-element i {
+    font-size: 2.5rem;
+}
+
+.d-elem1 {
+    top: 15%;
+    left: 8%;
+    animation-name: float-diagonal-1;
+}
+
+.d-elem2 {
+    top: 25%;
+    right: 8%;
+    animation-name: float-diagonal-2;
+}
+
+.d-elem3 {
+    bottom: 25%;
+    left: 15%;
+    animation-name: float-diagonal-3;
+}
+
+.d-elem4 {
+    bottom: 15%;
+    right: 15%;
+    animation-name: float-diagonal-4;
+}
+
+@keyframes float-diagonal-1 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(20px, 20px) rotate(90deg); }
+    50% { transform: translate(40px, 0) rotate(180deg); }
+    75% { transform: translate(20px, -20px) rotate(270deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes float-diagonal-2 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-20px, 20px) rotate(-90deg); }
+    50% { transform: translate(-40px, 0) rotate(-180deg); }
+    75% { transform: translate(-20px, -20px) rotate(-270deg); }
+    100% { transform: translate(0, 0) rotate(-360deg); }
+}
+
+@keyframes float-diagonal-3 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(20px, -20px) rotate(90deg); }
+    50% { transform: translate(40px, 0) rotate(180deg); }
+    75% { transform: translate(20px, 20px) rotate(270deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes float-diagonal-4 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-20px, -20px) rotate(-90deg); }
+    50% { transform: translate(-40px, 0) rotate(-180deg); }
+    75% { transform: translate(-20px, 20px) rotate(-270deg); }
+    100% { transform: translate(0, 0) rotate(-360deg); }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // إنشاء جزيئات متحركة في خلفية القسم الجانبي
+    const particlesContainer = document.querySelector('.login-particles');
+    if (particlesContainer) {
+        for (let i = 0; i < 50; i++) {
+            let particle = document.createElement('div');
+            particle.className = 'login-particle';
+            
+            // تعيين موقع وحجم وسرعة عشوائية
+            const size = Math.random() * 4 + 1;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+            const speedX = Math.random() * 0.5 - 0.25;
+            const speedY = Math.random() * 0.5 - 0.25;
+            const delay = Math.random() * 5;
+            
+            particle.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                background-color: rgba(255, 255, 255, ${Math.random() * 0.5 + 0.1});
+                border-radius: 50%;
+                top: ${posY}%;
+                left: ${posX}%;
+                z-index: 0;
+                animation: particleMove 8s linear infinite;
+                animation-delay: -${delay}s;
+                --particle-x: ${speedX}vw;
+                --particle-y: ${speedY}vh;
+            `;
+            
+            particlesContainer.appendChild(particle);
+        }
+    }
+    
+    // تجربة تأثير التركيز على حقول الإدخال
+    const inputs = document.querySelectorAll('.floating-input input');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('input-focused');
+        });
+        
+        input.addEventListener('blur', function() {
+            this.parentElement.classList.remove('input-focused');
+        });
+    });
+    
+    // تحريك البطاقة ثلاثية الأبعاد
+    const loginWrapper = document.querySelector('.login-wrapper');
+    if (loginWrapper) {
+        loginWrapper.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const angleY = (x - centerX) / 40;
+            const angleX = (centerY - y) / 40;
+            
+            this.style.transform = `rotateY(${angleY}deg) rotateX(${angleX}deg)`;
+        });
+        
+        loginWrapper.addEventListener('mouseleave', function() {
+            this.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        });
+    }
+});
+
+// تعريف قاعدة CSS المتحركة للجزيئات
+const styleSheet = document.createElement('style');
+styleSheet.textContent = `
+@keyframes particleMove {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(calc(var(--particle-x) * 20), calc(var(--particle-y) * 20));
+    }
+}
+
+.input-focused {
+    box-shadow: 0 0 15px rgba(13, 110, 253, 0.3);
+}
+`;
+document.head.appendChild(styleSheet);
+</script>
+{% endblock %}

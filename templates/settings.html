@@ -1,0 +1,832 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="settings-bg py-5 position-relative cursor-effect-enabled">
+    <!-- خلفية متحركة للصفحة -->
+    <div class="animated-background"></div>
+    
+    <!-- عناصر زخرفية متحركة -->
+    <div class="settings-decoration">
+        <div class="setting-icon setting1 parallax-element parallax-right" data-parallax-speed="0.04">
+            <i class="fas fa-sliders-h"></i>
+        </div>
+        <div class="setting-icon setting2 parallax-element parallax-left" data-parallax-speed="0.06">
+            <i class="fas fa-cogs"></i>
+        </div>
+        <div class="setting-icon setting3 parallax-element parallax-down" data-parallax-speed="0.05">
+            <i class="fas fa-wrench"></i>
+        </div>
+    </div>
+    
+    <div class="container position-relative">
+        <!-- رأس الصفحة -->
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="text-gradient display-4 fw-bold mb-3"><i class="fas fa-cog fa-spin-hover me-2"></i>إعدادات البوت</h1>
+                <p class="lead parallax-element parallax-up" data-parallax-speed="0.1">قم بتخصيص إعدادات البوت حسب احتياجاتك</p>
+                <div class="custom-shape-divider mt-3"></div>
+            </div>
+        </div>
+        
+        <!-- رسالة النجاح أو الخطأ -->
+        {% if message %}
+            {% if message_type == 'success' %}
+                <div class="alert alert-success alert-glow alert-dismissible fade show mb-4" role="alert">
+                    <i class="fas fa-check-circle me-2 pulse-element"></i> {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="إغلاق"></button>
+                </div>
+            {% else %}
+                <div class="alert alert-danger alert-glow alert-dismissible fade show mb-4" role="alert">
+                    <i class="fas fa-exclamation-circle me-2 pulse-element"></i> {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="إغلاق"></button>
+                </div>
+            {% endif %}
+        {% endif %}
+        
+        <!-- القائمة العلوية للإعدادات مع التأثيرات الحركية -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-10">
+                <div class="card shadow-lg rounded-4 card-3d settings-tabs-card">
+                    <ul class="nav nav-tabs nav-tabs-3d" id="settingsTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active btn-neon" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab" aria-controls="basic" aria-selected="true">
+                                <i class="fas fa-cog me-1 pulse-element"></i> الإعدادات الأساسية
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link btn-neon" id="filters-tab" data-bs-toggle="tab" data-bs-target="#filters" type="button" role="tab" aria-controls="filters" aria-selected="false">
+                                <i class="fas fa-filter me-1 pulse-element"></i> الفلاتر
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link btn-neon" id="text-tab" data-bs-toggle="tab" data-bs-target="#text" type="button" role="tab" aria-controls="text" aria-selected="false">
+                                <i class="fas fa-font me-1 pulse-element"></i> النصوص
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link btn-neon" id="control-tab" data-bs-toggle="tab" data-bs-target="#control" type="button" role="tab" aria-controls="control" aria-selected="false">
+                                <i class="fas fa-sliders-h me-1 pulse-element"></i> التحكم
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- محتوى الإعدادات -->
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <form action="{{ url_for('settings') }}" method="post">
+                    <div class="tab-content tab-content-3d" id="settingsTabsContent">
+                        <!-- الإعدادات الأساسية -->
+                        <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+                            <div class="card shadow-lg mb-4 card-hover-effect">
+                                <div class="card-header bg-primary text-white position-relative overflow-hidden">
+                                    <div class="header-glow"></div>
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-exchange-alt me-2 float-animation"></i> إعدادات التوجيه الأساسية
+                                    </h5>
+                                </div>
+                                <div class="card-body p-4">
+                                    <div class="mb-3 fade-in-element">
+                                        <label for="source_channel" class="form-label fw-medium">القناة المصدر</label>
+                                        <div class="input-group floating-input">
+                                            <span class="input-group-text"><i class="fas fa-broadcast-tower text-primary"></i></span>
+                                            <input type="text" class="form-control" id="source_channel" name="source_channel" 
+                                                   value="{{ source_channel }}" placeholder="معرف القناة المصدر (مثال: -100123456789)">
+                                            <div class="input-focus-bg"></div>
+                                        </div>
+                                        <small class="text-muted">أدخل معرف القناة المصدر لتوجيه الرسائل منها</small>
+                                    </div>
+                                    
+                                    <div class="mb-3 fade-in-element">
+                                        <label for="target_channel" class="form-label fw-medium">القناة الهدف</label>
+                                        <div class="input-group floating-input">
+                                            <span class="input-group-text"><i class="fas fa-bullseye text-primary"></i></span>
+                                            <input type="text" class="form-control" id="target_channel" name="target_channel" 
+                                                   value="{{ target_channel }}" placeholder="معرف القناة الهدف (مثال: -100987654321)">
+                                            <div class="input-focus-bg"></div>
+                                        </div>
+                                        <small class="text-muted">أدخل معرف القناة الهدف لتوجيه الرسائل إليها</small>
+                                    </div>
+                                    
+                                    <div class="mb-4 fade-in-element">
+                                        <label class="form-label fw-medium">وضع التوجيه</label>
+                                        <div class="d-flex flex-column flex-md-row gap-3">
+                                            <div class="form-check-card">
+                                                <input class="form-check-input" type="radio" name="forward_mode" id="mode_copy" value="copy" 
+                                                       {% if forward_mode == 'copy' %}checked{% endif %}>
+                                                <label class="form-check-label" for="mode_copy">
+                                                    <div class="check-icon"><i class="fas fa-copy text-primary"></i></div>
+                                                    <div class="check-text">
+                                                        <span class="fw-medium">نسخ الرسائل</span>
+                                                        <small class="d-block text-muted">نسخ الرسائل بدون إظهار المصدر الأصلي</small>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <div class="form-check-card">
+                                                <input class="form-check-input" type="radio" name="forward_mode" id="mode_forward" value="forward" 
+                                                       {% if forward_mode == 'forward' %}checked{% endif %}>
+                                                <label class="form-check-label" for="mode_forward">
+                                                    <div class="check-icon"><i class="fas fa-share text-primary"></i></div>
+                                                    <div class="check-text">
+                                                        <span class="fw-medium">إعادة توجيه</span>
+                                                        <small class="d-block text-muted">إعادة توجيه مع إظهار المصدر الأصلي</small>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-switch-3d mb-3 fade-in-element">
+                                        <input class="form-check-input" type="checkbox" id="forwarding_active" name="forwarding_active" 
+                                               {% if forwarding_active %}checked{% endif %}>
+                                        <label class="form-check-label" for="forwarding_active">
+                                            <span class="switch-icon">
+                                                <i class="fas fa-share-alt text-primary"></i>
+                                            </span>
+                                            <span class="switch-text">
+                                                <span class="fw-medium">تفعيل التوجيه</span>
+                                                <small class="d-block text-muted">تفعيل أو تعطيل توجيه الرسائل</small>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- إعدادات الفلاتر -->
+                        <div class="tab-pane fade" id="filters" role="tabpanel" aria-labelledby="filters-tab">
+                            <div class="card shadow-lg mb-4 card-hover-effect">
+                                <div class="card-header bg-primary text-white position-relative overflow-hidden">
+                                    <div class="header-glow"></div>
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-filter me-2 float-animation"></i> فلترة المحتوى
+                                    </h5>
+                                </div>
+                                <div class="card-body p-4">
+                                    <div class="row g-4">
+                                        <!-- فلتر اللغة -->
+                                        <div class="col-md-6 fade-in-element">
+                                            <div class="filter-card">
+                                                <div class="card-header-mini">
+                                                    <h6 class="mb-0"><i class="fas fa-language me-1 pulse-element"></i> فلتر اللغة</h6>
+                                                </div>
+                                                <div class="filter-card-body">
+                                                    <div class="form-switch-3d mb-3">
+                                                        <input class="form-check-input" type="checkbox" id="language_filter_enabled" name="language_filter_enabled" 
+                                                               {% if language_filter_enabled %}checked{% endif %}>
+                                                        <label class="form-check-label" for="language_filter_enabled">
+                                                            <span class="switch-icon">
+                                                                <i class="fas fa-globe text-primary"></i>
+                                                            </span>
+                                                            <span class="fw-medium">تفعيل فلتر اللغة</span>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="language_code" class="form-label fw-medium">رمز اللغة</label>
+                                                        <select class="form-select floating-input" id="language_code" name="language_code">
+                                                            <option value="ar" {% if language_code == 'ar' %}selected{% endif %}>العربية (ar)</option>
+                                                            <option value="en" {% if language_code == 'en' %}selected{% endif %}>الإنجليزية (en)</option>
+                                                            <option value="fr" {% if language_code == 'fr' %}selected{% endif %}>الفرنسية (fr)</option>
+                                                            <option value="es" {% if language_code == 'es' %}selected{% endif %}>الإسبانية (es)</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="radio-toggle-group">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="language_mode" id="language_whitelist" value="whitelist" 
+                                                                   {% if language_mode == 'whitelist' %}checked{% endif %}>
+                                                            <label class="form-check-label" for="language_whitelist">
+                                                                قائمة بيضاء (السماح)
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="language_mode" id="language_blacklist" value="blacklist" 
+                                                                   {% if language_mode == 'blacklist' %}checked{% endif %}>
+                                                            <label class="form-check-label" for="language_blacklist">
+                                                                قائمة سوداء (المنع)
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- فلتر الكلمات -->
+                                        <div class="col-md-6 fade-in-element">
+                                            <div class="filter-card">
+                                                <div class="card-header-mini">
+                                                    <h6 class="mb-0"><i class="fas fa-ban me-1 pulse-element"></i> فلتر الكلمات</h6>
+                                                </div>
+                                                <div class="filter-card-body">
+                                                    <div class="form-switch-3d mb-3">
+                                                        <input class="form-check-input" type="checkbox" id="blacklist_enabled" name="blacklist_enabled" 
+                                                               {% if blacklist_enabled %}checked{% endif %}>
+                                                        <label class="form-check-label" for="blacklist_enabled">
+                                                            <span class="switch-icon">
+                                                                <i class="fas fa-ban text-primary"></i>
+                                                            </span>
+                                                            <span class="fw-medium">تفعيل فلتر الكلمات المحظورة</span>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="blacklist_words" class="form-label fw-medium">الكلمات المحظورة</label>
+                                                        <div class="textarea-container floating-input">
+                                                            <textarea class="form-control" id="blacklist_words" name="blacklist_words" 
+                                                                    rows="3" placeholder="أدخل الكلمات المحظورة مفصولة بفواصل">{{ blacklist_words }}</textarea>
+                                                            <div class="input-focus-bg"></div>
+                                                        </div>
+                                                        <small class="text-muted">أدخل الكلمات المحظورة مفصولة بفواصل</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- فلتر الميديا -->
+                                        <div class="col-md-6 fade-in-element">
+                                            <div class="filter-card">
+                                                <div class="card-header-mini">
+                                                    <h6 class="mb-0"><i class="fas fa-photo-video me-1 pulse-element"></i> فلتر الميديا</h6>
+                                                </div>
+                                                <div class="filter-card-body">
+                                                    <div class="media-filter-option mb-2">
+                                                        <input class="form-check-input" type="checkbox" id="filter_photos" name="filter_photos" 
+                                                               {% if filter_photos %}checked{% endif %}>
+                                                        <label class="form-check-label" for="filter_photos">
+                                                            <span class="filter-icon"><i class="fas fa-image text-primary"></i></span>
+                                                            <span class="filter-text">منع الصور</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="media-filter-option mb-2">
+                                                        <input class="form-check-input" type="checkbox" id="filter_videos" name="filter_videos" 
+                                                               {% if filter_videos %}checked{% endif %}>
+                                                        <label class="form-check-label" for="filter_videos">
+                                                            <span class="filter-icon"><i class="fas fa-video text-primary"></i></span>
+                                                            <span class="filter-text">منع الفيديوهات</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="media-filter-option mb-2">
+                                                        <input class="form-check-input" type="checkbox" id="filter_animations" name="filter_animations" 
+                                                               {% if filter_animations %}checked{% endif %}>
+                                                        <label class="form-check-label" for="filter_animations">
+                                                            <span class="filter-icon"><i class="fas fa-film text-primary"></i></span>
+                                                            <span class="filter-text">منع الصور المتحركة</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="media-filter-option">
+                                                        <input class="form-check-input" type="checkbox" id="filter_documents" name="filter_documents" 
+                                                               {% if filter_documents %}checked{% endif %}>
+                                                        <label class="form-check-label" for="filter_documents">
+                                                            <span class="filter-icon"><i class="fas fa-file text-primary"></i></span>
+                                                            <span class="filter-text">منع الملفات</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- فلتر الأزرار والروابط -->
+                                        <div class="col-md-6 fade-in-element">
+                                            <div class="filter-card">
+                                                <div class="card-header-mini">
+                                                    <h6 class="mb-0"><i class="fas fa-link me-1 pulse-element"></i> فلتر الأزرار والروابط</h6>
+                                                </div>
+                                                <div class="filter-card-body">
+                                                    <div class="form-switch-3d mb-3">
+                                                        <input class="form-check-input" type="checkbox" id="remove_buttons" name="remove_buttons" 
+                                                               {% if remove_buttons %}checked{% endif %}>
+                                                        <label class="form-check-label" for="remove_buttons">
+                                                            <span class="switch-icon">
+                                                                <i class="fas fa-external-link-alt text-primary"></i>
+                                                            </span>
+                                                            <span class="fw-medium">إزالة الأزرار التفاعلية</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-switch-3d mb-3">
+                                                        <input class="form-check-input" type="checkbox" id="clean_links" name="clean_links" 
+                                                               {% if clean_links %}checked{% endif %}>
+                                                        <label class="form-check-label" for="clean_links">
+                                                            <span class="switch-icon">
+                                                                <i class="fas fa-broom text-primary"></i>
+                                                            </span>
+                                                            <span class="fw-medium">تنظيف الروابط</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- إعدادات النصوص -->
+                        <div class="tab-pane fade" id="text" role="tabpanel" aria-labelledby="text-tab">
+                            <!-- هنا محتوى تبويب النصوص -->
+                        </div>
+
+                        <!-- إعدادات التحكم -->
+                        <div class="tab-pane fade" id="control" role="tabpanel" aria-labelledby="control-tab">
+                            <!-- هنا محتوى تبويب التحكم -->
+                        </div>
+                    </div>
+
+                    <div class="card shadow-lg mb-4 mt-4 card-hover-effect">
+                        <div class="card-body text-center p-4">
+                            <button type="submit" class="btn btn-primary btn-lg btn-neon">
+                                <i class="fas fa-save me-2"></i> حفظ الإعدادات
+                            </button>
+                            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary btn-lg hover-scale ms-2">
+                                <i class="fas fa-arrow-right me-2"></i> العودة للوحة التحكم
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* تنسيقات خاصة بصفحة الإعدادات */
+.settings-bg {
+    background: linear-gradient(135deg, var(--primary-lightest) 0%, #ffffff 100%);
+    min-height: calc(100vh - 190px);
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-shape-divider {
+    width: 150px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--primary), transparent);
+    margin: 0 auto;
+}
+
+/* تنسيقات عناصر الزخرفة */
+.settings-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.setting-icon {
+    position: absolute;
+    font-size: 8rem;
+    color: rgba(13, 110, 253, 0.05);
+    z-index: 0;
+    transition: transform 0.1s ease-out;
+}
+
+.setting1 {
+    top: 10%;
+    right: 10%;
+}
+
+.setting2 {
+    bottom: 15%;
+    left: 8%;
+}
+
+.setting3 {
+    top: 50%;
+    left: 15%;
+}
+
+/* تنسيقات التبويبات */
+.settings-tabs-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.nav-tabs-3d {
+    border-bottom: none;
+    padding: 0.5rem;
+    display: flex;
+}
+
+.nav-tabs-3d .nav-item {
+    flex: 1;
+}
+
+.nav-tabs-3d .nav-link {
+    width: 100%;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+    margin: 0 0.25rem;
+    border: none;
+    color: var(--gray-700);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-tabs-3d .nav-link.active {
+    background-color: var(--primary);
+    color: white;
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+    transform: translateY(-3px);
+}
+
+.nav-tabs-3d .nav-link:hover:not(.active) {
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* تنسيقات البطاقات والمحتوى */
+.card-hover-effect {
+    transition: all 0.3s ease;
+}
+
+.card-hover-effect:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.header-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+    z-index: 0;
+    animation: headerGlow 5s infinite;
+}
+
+@keyframes headerGlow {
+    0%, 100% {
+        transform: translateX(-100%);
+    }
+    50% {
+        transform: translateX(100%);
+    }
+}
+
+/* تنسيقات عناصر الفلترة */
+.filter-card {
+    background-color: white;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.filter-card:hover {
+    border-color: rgba(13, 110, 253, 0.15);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.card-header-mini {
+    padding: 0.75rem 1rem;
+    background-color: var(--primary-lightest);
+    border-radius: 0.75rem 0.75rem 0 0;
+    font-weight: 600;
+}
+
+.filter-card-body {
+    padding: 1rem;
+}
+
+/* تنسيقات مفاتيح التبديل */
+.form-switch-3d {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.form-switch-3d:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+    transform: translateX(5px);
+}
+
+.form-switch-3d .form-check-input {
+    margin-right: 0.75rem;
+    margin-left: 0;
+    height: 1.5rem;
+    width: 2.75rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-switch-3d .form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.form-switch-3d .form-check-label {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem;
+}
+
+.switch-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background-color: rgba(13, 110, 253, 0.1);
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.switch-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-switch-3d:hover .switch-icon {
+    transform: scale(1.1) rotate(10deg);
+}
+
+/* تنسيقات خيارات الوسائط */
+.media-filter-option {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.media-filter-option:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+.media-filter-option .form-check-input {
+    margin-right: 0.5rem;
+    margin-left: 0;
+}
+
+.media-filter-option .form-check-label {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem;
+}
+
+.filter-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(13, 110, 253, 0.1);
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.media-filter-option:hover .filter-icon {
+    transform: scale(1.1);
+}
+
+/* تنسيقات بطاقات خيارات التوجيه */
+.form-check-card {
+    display: flex;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    flex: 1;
+    position: relative;
+}
+
+.form-check-card .form-check-input {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    margin: 0;
+}
+
+.form-check-card .form-check-label {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+.form-check-card:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.form-check-card .check-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(13, 110, 253, 0.1);
+    border-radius: 50%;
+    margin-right: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-check-card:hover .check-icon {
+    transform: scale(1.1) rotate(10deg);
+}
+
+.form-check-card input:checked + label .check-icon {
+    background-color: var(--primary);
+    color: white;
+}
+
+.form-check-card input:checked + label .check-text {
+    color: var(--primary);
+}
+
+.form-check-card input:checked + label .check-text small {
+    color: var(--gray-600);
+}
+
+/* تنسيقات حقول الإدخال */
+.floating-input {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.floating-input:focus-within {
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.15);
+}
+
+.input-focus-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--info));
+    transition: width 0.3s ease;
+    z-index: 0;
+}
+
+.floating-input:focus-within .input-focus-bg {
+    width: 100%;
+}
+
+.textarea-container {
+    position: relative;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+/* تنسيق النص المتدرج للعناوين الرئيسية */
+.text-gradient {
+    background: linear-gradient(90deg, var(--primary), var(--info));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+/* تأثير الدوران عند التحويم */
+.fa-spin-hover {
+    transition: transform 0.4s ease;
+}
+
+h1:hover .fa-spin-hover {
+    transform: rotate(180deg);
+}
+
+/* تنسيقات أزرار التبديل في مجموعة */
+.radio-toggle-group {
+    display: flex;
+    background-color: var(--gray-100);
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+}
+
+.radio-toggle-group .form-check {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    flex: 1;
+    text-align: center;
+}
+
+.radio-toggle-group .form-check-input {
+    display: none;
+}
+
+.radio-toggle-group .form-check-label {
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+.radio-toggle-group .form-check-input:checked + .form-check-label {
+    color: var(--primary);
+    font-weight: 500;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // تطبيق تأثير ظهور العناصر عند التمرير
+    const fadeElements = document.querySelectorAll('.fade-in-element');
+    
+    const fadeInObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    fadeElements.forEach(element => {
+        fadeInObserver.observe(element);
+    });
+    
+    // تهيئة تأثيرات البطاقات ثلاثية الأبعاد
+    init3DCardEffects();
+    
+    // تطبيق تأثيرات التبديل على مفاتيح التبديل
+    const tabButtons = document.querySelectorAll('[data-bs-toggle="tab"]');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // إضافة تأثير انتقال سلس عند تبديل التبويبات
+            const tabContent = document.getElementById(this.getAttribute('aria-controls'));
+            tabContent.style.animation = 'none';
+            setTimeout(() => {
+                tabContent.style.animation = '';
+            }, 10);
+            
+            // إضافة تأثير موجة عند النقر
+            const ripple = document.createElement('span');
+            ripple.classList.add('tab-ripple');
+            this.appendChild(ripple);
+            
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height) * 2;
+            
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${event.clientX - rect.left - size/2}px`;
+            ripple.style.top = `${event.clientY - rect.top - size/2}px`;
+            
+            ripple.classList.add('active');
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 500);
+        });
+    });
+});
+
+// تعريف أنماط CSS إضافية لتأثير الموجة
+const styleElement = document.createElement('style');
+styleElement.textContent = `
+.tab-ripple {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 0.5s ease-out;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+.visible {
+    animation: fadeInUp 0.5s forwards ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+`;
+document.head.appendChild(styleElement);
+</script>
+{% endblock %}

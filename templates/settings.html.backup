@@ -1,0 +1,577 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <!-- القائمة العلوية للإعدادات -->
+        <ul class="nav nav-tabs mb-4" id="settingsTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab" aria-controls="basic" aria-selected="true">
+                    <i class="fas fa-cog me-1"></i> الإعدادات الأساسية
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="filters-tab" data-bs-toggle="tab" data-bs-target="#filters" type="button" role="tab" aria-controls="filters" aria-selected="false">
+                    <i class="fas fa-filter me-1"></i> الفلاتر
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="text-tab" data-bs-toggle="tab" data-bs-target="#text" type="button" role="tab" aria-controls="text" aria-selected="false">
+                    <i class="fas fa-font me-1"></i> النصوص
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="control-tab" data-bs-toggle="tab" data-bs-target="#control" type="button" role="tab" aria-controls="control" aria-selected="false">
+                    <i class="fas fa-sliders-h me-1"></i> التحكم
+                </button>
+            </li>
+        </ul>
+
+        <!-- محتوى الإعدادات -->
+        <form action="{{ url_for('settings') }}" method="post">
+            <div class="tab-content" id="settingsTabsContent">
+                <!-- الإعدادات الأساسية -->
+                <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+                    <div class="card shadow mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">
+                                <i class="fas fa-exchange-alt me-2"></i> إعدادات التوجيه الأساسية
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="mb-3">
+                                <label for="source_channel" class="form-label">القناة المصدر</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-broadcast-tower"></i></span>
+                                    <input type="text" class="form-control" id="source_channel" name="source_channel" 
+                                           value="{{ source_channel }}" placeholder="معرف القناة المصدر (مثال: -100123456789)">
+                                </div>
+                                <small class="text-muted">أدخل معرف القناة المصدر لتوجيه الرسائل منها</small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="target_channel" class="form-label">القناة الهدف</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-bullseye"></i></span>
+                                    <input type="text" class="form-control" id="target_channel" name="target_channel" 
+                                           value="{{ target_channel }}" placeholder="معرف القناة الهدف (مثال: -100987654321)">
+                                </div>
+                                <small class="text-muted">أدخل معرف القناة الهدف لتوجيه الرسائل إليها</small>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label">وضع التوجيه</label>
+                                <div class="d-flex">
+                                    <div class="form-check me-4">
+                                        <input class="form-check-input" type="radio" name="forward_mode" id="mode_copy" value="copy" 
+                                               {% if forward_mode == 'copy' %}checked{% endif %}>
+                                        <label class="form-check-label" for="mode_copy">
+                                            <i class="fas fa-copy me-1"></i> نسخ الرسائل
+                                        </label>
+                                        <small class="d-block text-muted">نسخ الرسائل بدون إظهار المصدر الأصلي</small>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="forward_mode" id="mode_forward" value="forward" 
+                                               {% if forward_mode == 'forward' %}checked{% endif %}>
+                                        <label class="form-check-label" for="mode_forward">
+                                            <i class="fas fa-share me-1"></i> إعادة توجيه
+                                        </label>
+                                        <small class="d-block text-muted">إعادة توجيه مع إظهار المصدر الأصلي</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="forwarding_active" name="forwarding_active" 
+                                       {% if forwarding_active %}checked{% endif %}>
+                                <label class="form-check-label" for="forwarding_active">
+                                    تفعيل التوجيه
+                                </label>
+                                <small class="d-block text-muted">تفعيل أو تعطيل توجيه الرسائل</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- إعدادات الفلاتر -->
+                <div class="tab-pane fade" id="filters" role="tabpanel" aria-labelledby="filters-tab">
+                    <div class="card shadow mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">
+                                <i class="fas fa-filter me-2"></i> فلترة المحتوى
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-3">
+                                <!-- فلتر اللغة -->
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0"><i class="fas fa-language me-1"></i> فلتر اللغة</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="language_filter_enabled" name="language_filter_enabled" 
+                                                       {% if language_filter_enabled %}checked{% endif %}>
+                                                <label class="form-check-label" for="language_filter_enabled">
+                                                    تفعيل فلتر اللغة
+                                                </label>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="language_code" class="form-label">رمز اللغة</label>
+                                                <select class="form-select" id="language_code" name="language_code">
+                                                    <option value="ar" {% if language_code == 'ar' %}selected{% endif %}>العربية (ar)</option>
+                                                    <option value="en" {% if language_code == 'en' %}selected{% endif %}>الإنجليزية (en)</option>
+                                                    <option value="fr" {% if language_code == 'fr' %}selected{% endif %}>الفرنسية (fr)</option>
+                                                    <option value="es" {% if language_code == 'es' %}selected{% endif %}>الإسبانية (es)</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="language_mode" id="language_whitelist" value="whitelist" 
+                                                       {% if language_mode == 'whitelist' %}checked{% endif %}>
+                                                <label class="form-check-label" for="language_whitelist">
+                                                    قائمة بيضاء (السماح)
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="language_mode" id="language_blacklist" value="blacklist" 
+                                                       {% if language_mode == 'blacklist' %}checked{% endif %}>
+                                                <label class="form-check-label" for="language_blacklist">
+                                                    قائمة سوداء (المنع)
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- فلتر الكلمات -->
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0"><i class="fas fa-ban me-1"></i> فلتر الكلمات</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="blacklist_enabled" name="blacklist_enabled" 
+                                                       {% if blacklist_enabled %}checked{% endif %}>
+                                                <label class="form-check-label" for="blacklist_enabled">
+                                                    تفعيل فلتر الكلمات المحظورة
+                                                </label>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="blacklist_words" class="form-label">الكلمات المحظورة</label>
+                                                <textarea class="form-control" id="blacklist_words" name="blacklist_words" 
+                                                          rows="3" placeholder="أدخل الكلمات المحظورة مفصولة بفواصل">{{ blacklist_words }}</textarea>
+                                                <small class="text-muted">أدخل الكلمات المحظورة مفصولة بفواصل</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- فلتر الميديا -->
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0"><i class="fas fa-photo-video me-1"></i> فلتر الميديا</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="checkbox" id="filter_photos" name="filter_photos" 
+                                                       {% if filter_photos %}checked{% endif %}>
+                                                <label class="form-check-label" for="filter_photos">
+                                                    <i class="fas fa-image me-1"></i> منع الصور
+                                                </label>
+                                            </div>
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="checkbox" id="filter_videos" name="filter_videos" 
+                                                       {% if filter_videos %}checked{% endif %}>
+                                                <label class="form-check-label" for="filter_videos">
+                                                    <i class="fas fa-video me-1"></i> منع الفيديوهات
+                                                </label>
+                                            </div>
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="checkbox" id="filter_animations" name="filter_animations" 
+                                                       {% if filter_animations %}checked{% endif %}>
+                                                <label class="form-check-label" for="filter_animations">
+                                                    <i class="fas fa-film me-1"></i> منع الصور المتحركة
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="filter_documents" name="filter_documents" 
+                                                       {% if filter_documents %}checked{% endif %}>
+                                                <label class="form-check-label" for="filter_documents">
+                                                    <i class="fas fa-file me-1"></i> منع الملفات
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- فلتر الأزرار والروابط -->
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0"><i class="fas fa-link me-1"></i> فلتر الأزرار والروابط</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="remove_buttons" name="remove_buttons" 
+                                                       {% if remove_buttons %}checked{% endif %}>
+                                                <label class="form-check-label" for="remove_buttons">
+                                                    إزالة الأزرار
+                                                </label>
+                                                <small class="d-block text-muted">إزالة أزرار الانضمام والروابط من الرسائل</small>
+                                            </div>
+
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="filter_forwarded" name="filter_forwarded" 
+                                                       {% if filter_forwarded %}checked{% endif %}>
+                                                <label class="form-check-label" for="filter_forwarded">
+                                                    منع الرسائل المعاد توجيهها
+                                                </label>
+                                                <small class="d-block text-muted">منع الرسائل المعاد توجيهها من مصادر أخرى</small>
+                                            </div>
+
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="filter_inline_buttons" name="filter_inline_buttons" 
+                                                       {% if filter_inline_buttons %}checked{% endif %}>
+                                                <label class="form-check-label" for="filter_inline_buttons">
+                                                    منع الرسائل التي تحتوي على أزرار
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- إعدادات النصوص -->
+                <div class="tab-pane fade" id="text" role="tabpanel" aria-labelledby="text-tab">
+                    <div class="card shadow mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">
+                                <i class="fas fa-font me-2"></i> إعدادات النصوص
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <!-- استبدال النصوص -->
+                            <div class="mb-4">
+                                <h6><i class="fas fa-exchange-alt me-1"></i> استبدال النصوص</h6>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="text_replacement_enabled" name="text_replacement_enabled" 
+                                           {% if text_replacement_enabled %}checked{% endif %}>
+                                    <label class="form-check-label" for="text_replacement_enabled">
+                                        تفعيل استبدال النصوص
+                                    </label>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered text-replacements-table">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>النص الأصلي</th>
+                                                <th>النص البديل</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for i in range(5) %}
+                                            <tr>
+                                                <td>
+                                                    <input type="text" class="form-control form-control-sm" 
+                                                           name="text_replacement_pattern_{{ i }}" value="{{ text_replacements[i].pattern if text_replacements|length > i else '' }}">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control form-control-sm" 
+                                                           name="text_replacement_replacement_{{ i }}" value="{{ text_replacements[i].replacement if text_replacements|length > i else '' }}">
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- تنسيق النص -->
+                            <div class="mb-4">
+                                <h6><i class="fas fa-heading me-1"></i> تنسيق النص</h6>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="text_formatting_enabled" name="text_formatting_enabled" 
+                                           {% if text_formatting_enabled %}checked{% endif %}>
+                                    <label class="form-check-label" for="text_formatting_enabled">
+                                        تفعيل تنسيق النصوص
+                                    </label>
+                                </div>
+
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="capitalize_sentences" name="capitalize_sentences" 
+                                           {% if capitalize_sentences %}checked{% endif %}>
+                                    <label class="form-check-label" for="capitalize_sentences">
+                                        بدء الجمل بحرف كبير (للغات اللاتينية)
+                                    </label>
+                                </div>
+
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="remove_extra_spaces" name="remove_extra_spaces" 
+                                           {% if remove_extra_spaces %}checked{% endif %}>
+                                    <label class="form-check-label" for="remove_extra_spaces">
+                                        إزالة المسافات الزائدة
+                                    </label>
+                                </div>
+
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="fix_punctuation" name="fix_punctuation" 
+                                           {% if fix_punctuation %}checked{% endif %}>
+                                    <label class="form-check-label" for="fix_punctuation">
+                                        إصلاح علامات الترقيم
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- الترجمة التلقائية -->
+                            <div class="mb-4">
+                                <h6><i class="fas fa-language me-1"></i> الترجمة التلقائية</h6>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="auto_translation" name="auto_translation" 
+                                           {% if auto_translation %}checked{% endif %}>
+                                    <label class="form-check-label" for="auto_translation">
+                                        تفعيل الترجمة التلقائية
+                                    </label>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="translation_source" class="form-label">اللغة المصدر</label>
+                                            <select class="form-select" id="translation_source" name="translation_source">
+                                                <option value="auto" {% if translation_source == 'auto' %}selected{% endif %}>تلقائي</option>
+                                                <option value="en" {% if translation_source == 'en' %}selected{% endif %}>الإنجليزية</option>
+                                                <option value="ar" {% if translation_source == 'ar' %}selected{% endif %}>العربية</option>
+                                                <option value="fr" {% if translation_source == 'fr' %}selected{% endif %}>الفرنسية</option>
+                                                <option value="es" {% if translation_source == 'es' %}selected{% endif %}>الإسبانية</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="translation_target" class="form-label">اللغة الهدف</label>
+                                            <select class="form-select" id="translation_target" name="translation_target">
+                                                <option value="en" {% if translation_target == 'en' %}selected{% endif %}>الإنجليزية</option>
+                                                <option value="ar" {% if translation_target == 'ar' %}selected{% endif %}>العربية</option>
+                                                <option value="fr" {% if translation_target == 'fr' %}selected{% endif %}>الفرنسية</option>
+                                                <option value="es" {% if translation_target == 'es' %}selected{% endif %}>الإسبانية</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- إعدادات التحكم -->
+                <div class="tab-pane fade" id="control" role="tabpanel" aria-labelledby="control-tab">
+                    <div class="card shadow mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">
+                                <i class="fas fa-sliders-h me-2"></i> إعدادات التحكم
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-3">
+                                <!-- تأخير الرسائل -->
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0"><i class="fas fa-clock me-1"></i> تأخير الرسائل</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="delay_enabled" name="delay_enabled" 
+                                                       {% if delay_enabled %}checked{% endif %}>
+                                                <label class="form-check-label" for="delay_enabled">
+                                                    تفعيل تأخير الرسائل
+                                                </label>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="delay_seconds" class="form-label">مدة التأخير (بالثواني)</label>
+                                                <input type="number" class="form-control" id="delay_seconds" name="delay_seconds" 
+                                                       value="{{ delay_seconds }}" min="1" max="300">
+                                                <small class="text-muted">مدة التأخير بين الرسائل بالثواني</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- منع الرسائل المكررة -->
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0"><i class="fas fa-clone me-1"></i> منع الرسائل المكررة</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="duplicate_filter_enabled" name="duplicate_filter_enabled" 
+                                                       {% if duplicate_filter_enabled %}checked{% endif %}>
+                                                <label class="form-check-label" for="duplicate_filter_enabled">
+                                                    منع الرسائل المكررة
+                                                </label>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="duplicate_filter_time" class="form-label">مدة التذكر (بالساعات)</label>
+                                                <input type="number" class="form-control" id="duplicate_filter_time" name="duplicate_filter_time" 
+                                                       value="{{ duplicate_filter_time }}" min="1" max="72">
+                                                <small class="text-muted">المدة التي يتذكر فيها البوت الرسائل السابقة للتحقق من التكرار</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- الحد الأقصى للأحرف -->
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0"><i class="fas fa-text-height me-1"></i> الحد الأقصى للأحرف</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="char_limit_enabled" name="char_limit_enabled" 
+                                                       {% if char_limit_enabled %}checked{% endif %}>
+                                                <label class="form-check-label" for="char_limit_enabled">
+                                                    تفعيل حد الأحرف
+                                                </label>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="char_limit" class="form-label">الحد الأقصى للأحرف</label>
+                                                <input type="number" class="form-control" id="char_limit" name="char_limit" 
+                                                       value="{{ char_limit }}" min="10" max="4096">
+                                                <small class="text-muted">الحد الأقصى لعدد الأحرف المسموح بها في الرسالة</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ساعات العمل -->
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0"><i class="fas fa-calendar-alt me-1"></i> ساعات العمل</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="working_hours_enabled" name="working_hours_enabled" 
+                                                       {% if working_hours_enabled %}checked{% endif %}>
+                                                <label class="form-check-label" for="working_hours_enabled">
+                                                    تفعيل ساعات العمل
+                                                </label>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="working_hours_start" class="form-label">وقت البدء</label>
+                                                        <input type="time" class="form-control" id="working_hours_start" name="working_hours_start" 
+                                                               value="{{ working_hours_start }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="working_hours_end" class="form-label">وقت الانتهاء</label>
+                                                        <input type="time" class="form-control" id="working_hours_end" name="working_hours_end" 
+                                                               value="{{ working_hours_end }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- أزرار الحفظ والإلغاء -->
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary me-md-2">
+                    <i class="fas fa-times me-1"></i> إلغاء
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-1"></i> حفظ الإعدادات
+                </button>
+            </div>
+        </form>
+
+        <!-- معلومات مفيدة -->
+        <div class="card shadow mt-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i> معلومات مفيدة
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="accordion" id="helpAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                <i class="fas fa-question-circle me-1"></i> كيفية الحصول على معرف القناة؟
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#helpAccordion">
+                            <div class="accordion-body">
+                                <ol class="mb-0 ps-3">
+                                    <li>أضف البوت @username_to_id_bot إلى قناتك كمشرف.</li>
+                                    <li>أرسل أي رسالة في القناة.</li>
+                                    <li>سيقوم البوت بإرسال معرف القناة إليك.</li>
+                                    <li>انسخ الرقم بما في ذلك العلامة "-100" في البداية.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <i class="fas fa-filter me-1"></i> كيفية استخدام الفلاتر
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#helpAccordion">
+                            <div class="accordion-body">
+                                <p>الفلاتر تساعدك في التحكم بالمحتوى الذي يتم توجيهه:</p>
+                                <ul>
+                                    <li><strong>فلتر اللغة:</strong> يتيح لك تحديد لغات محددة للسماح بها أو منعها.</li>
+                                    <li><strong>فلتر الكلمات:</strong> يمنع الرسائل التي تحتوي على كلمات محددة.</li>
+                                    <li><strong>فلتر الميديا:</strong> يتيح لك تحديد أنواع الوسائط المسموح بها.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <i class="fas fa-font me-1"></i> استبدال النصوص
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#helpAccordion">
+                            <div class="accordion-body">
+                                <p>ميزة استبدال النصوص تمكنك من:</p>
+                                <ul>
+                                    <li>تغيير كلمات أو عبارات محددة بأخرى في جميع الرسائل.</li>
+                                    <li>إزالة نصوص معينة (مثل روابط القنوات) عن طريق استبدالها بنص فارغ.</li>
+                                    <li>إضافة نصوص في بداية أو نهاية الرسائل باستخدام الرموز الخاصة.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

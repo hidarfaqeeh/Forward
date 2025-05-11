@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}" dir="{% if is_rtl %}rtl{% else %}ltr{% endif %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if current_lang == 'ar' %}عدي الغولي - بوت توجيه تلجرام المتطور{% else %}Oday Al-Gholi - Advanced Telegram Forwarding Bot{% endif %}</title>
+    <!-- Bootstrap CSS with RTL/LTR support -->
+    {% if is_rtl %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+    {% else %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    {% endif %}
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Google Fonts - Cairo for Arabic, Roboto for English -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: {% if is_rtl %}'Cairo'{% else %}'Roboto'{% endif %}, sans-serif;
+        }
+        
+        /* Language switcher button */
+        .language-switcher {
+            position: fixed;
+            bottom: 20px;
+            {% if is_rtl %}left{% else %}right{% endif %}: 20px;
+            z-index: 1000;
+            background-color: var(--bs-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .language-switcher:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .language-icon {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    {% if session.user_id %}
+    <!-- Navigation for logged in users -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('dashboard') }}">
+                <i class="fab fa-telegram {% if is_rtl %}me-2{% else %}me-2{% endif %}"></i>
+                {% if current_lang == 'ar' %}إدارة بوت تلجرام{% else %}Telegram Bot Management{% endif %}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav {% if is_rtl %}me-auto{% else %}ms-auto{% endif %}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('dashboard') }}">
+                            <i class="fas fa-tachometer-alt {% if is_rtl %}me-1{% else %}me-1{% endif %}"></i> 
+                            {% if current_lang == 'ar' %}لوحة التحكم{% else %}Dashboard{% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('settings') }}">
+                            <i class="fas fa-cog {% if is_rtl %}me-1{% else %}me-1{% endif %}"></i> 
+                            {% if current_lang == 'ar' %}الإعدادات{% else %}Settings{% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admins') }}">
+                            <i class="fas fa-users-cog {% if is_rtl %}me-1{% else %}me-1{% endif %}"></i> 
+                            {% if current_lang == 'ar' %}المشرفون{% else %}Admins{% endif %}
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <span class="navbar-text {% if is_rtl %}me-3{% else %}me-3{% endif %}">
+                        <i class="fas fa-user {% if is_rtl %}me-1{% else %}me-1{% endif %}"></i>
+                        {{ session.username }}
+                    </span>
+                    <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-sign-out-alt {% if is_rtl %}me-1{% else %}me-1{% endif %}"></i> 
+                        {% if current_lang == 'ar' %}تسجيل الخروج{% else %}Logout{% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% else %}
+    <!-- Navigation for guests -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="fab fa-telegram {% if is_rtl %}me-2{% else %}me-2{% endif %} pulse-element"></i>
+                <span class="text-gradient-inline-brand">{% if current_lang == 'ar' %}عدي الغولي{% else %}Oday Al-Gholi{% endif %}</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav {% if is_rtl %}me-auto{% else %}ms-auto{% endif %}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">
+                            <i class="fas fa-home {% if is_rtl %}me-1{% else %}me-1{% endif %}"></i> 
+                            {% if current_lang == 'ar' %}الرئيسية{% else %}Home{% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('guest_features') }}">
+                            <i class="fas fa-star {% if is_rtl %}me-1{% else %}me-1{% endif %}"></i> 
+                            {% if current_lang == 'ar' %}المميزات{% else %}Features{% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link developer-nav-link" href="https://t.me/zwamlallaith" target="_blank">
+                            <i class="fab fa-telegram {% if is_rtl %}me-1{% else %}me-1{% endif %}"></i> 
+                            {% if current_lang == 'ar' %}قناة المطور{% else %}Developer Channel{% endif %}
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex {% if is_rtl %}me-2{% else %}ms-2{% endif %}">
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-neon-sm">
+                        <i class="fas fa-sign-in-alt {% if is_rtl %}me-1{% else %}me-1{% endif %}"></i> 
+                        {% if current_lang == 'ar' %}تسجيل الدخول{% else %}Login{% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
+    <style>
+    /* تنسيقات للنافبار */
+    .text-gradient-inline-brand {
+        background: linear-gradient(90deg, #ffffff, #e6e6e6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        font-weight: 700;
+    }
+    
+    .developer-nav-link {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .developer-nav-link:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #fff;
+        transition: width 0.3s ease;
+    }
+    
+    .developer-nav-link:hover:after {
+        width: 100%;
+    }
+    
+    .btn-neon-sm {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s;
+        border-color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .btn-neon-sm:hover {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        border-color: #fff;
+        transform: translateY(-2px);
+    }
+    </style>
+    
+    <!-- Main Content -->
+    <div class="container mt-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-section py-4 position-relative">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="footer-content text-center">
+                        <a href="https://t.me/zwamlallaith" target="_blank" class="footer-brand d-inline-block mb-2">
+                            <i class="fab fa-telegram {% if is_rtl %}me-2{% else %}me-2{% endif %} pulse-element"></i>
+                            <span class="fw-bold text-gradient-inline">{% if current_lang == 'ar' %}عدي الغولي{% else %}Oday Al-Gholi{% endif %}</span>
+                        </a>
+                        <p class="copyright mb-0">
+                            {% if current_lang == 'ar' %}جميع الحقوق محفوظة{% else %}All Rights Reserved{% endif %} &copy; 2025
+                            <a href="https://t.me/zwamlallaith" target="_blank" class="developer-link-footer {% if is_rtl %}ms-2{% else %}ms-2{% endif %}">
+                                <i class="fas fa-code-branch {% if is_rtl %}me-1{% else %}me-1{% endif %}"></i>
+                                t.me/zwamlallaith
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <style>
+    /* تنسيقات تذييل الصفحة */
+    .footer-section {
+        background-color: var(--light);
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .footer-brand {
+        font-size: 1.25rem;
+        color: var(--primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .footer-brand:hover {
+        transform: translateY(-3px);
+        color: var(--primary-dark);
+    }
+    
+    .text-gradient-inline {
+        background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+    }
+    
+    .copyright {
+        color: var(--gray-600);
+        font-size: 0.9rem;
+    }
+    
+    .developer-link-footer {
+        display: inline-block;
+        color: var(--primary);
+        text-decoration: none;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    
+    .developer-link-footer:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 0;
+        height: 1px;
+        background-color: var(--primary);
+        transition: width 0.3s ease;
+    }
+    
+    .developer-link-footer:hover {
+        color: var(--primary-dark);
+    }
+    
+    .developer-link-footer:hover:after {
+        width: 100%;
+    }
+    </style>
+
+    <!-- Language Switcher Button -->
+    <a href="{{ url_for('change_language', lang=other_lang) }}" class="language-switcher" title="{% if current_lang == 'ar' %}Switch to English{% else %}تبديل إلى العربية{% endif %}">
+        <span class="language-icon">{{ other_lang|upper }}</span>
+    </a>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

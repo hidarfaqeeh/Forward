@@ -1,0 +1,979 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="features-showcase-bg py-5 position-relative cursor-effect-enabled">
+    <!-- خلفية متحركة للصفحة -->
+    <div class="animated-background"></div>
+    
+    <!-- عناصر زخرفية متحركة -->
+    <div class="parallax-decoration">
+        <div class="decoration-item item1 parallax-element parallax-left" data-parallax-speed="0.05">
+            <i class="fas fa-code"></i>
+        </div>
+        <div class="decoration-item item2 parallax-element parallax-down" data-parallax-speed="0.08">
+            <i class="fas fa-envelope"></i>
+        </div>
+        <div class="decoration-item item3 parallax-element parallax-right" data-parallax-speed="0.06">
+            <i class="fas fa-paper-plane"></i>
+        </div>
+        <div class="decoration-item item4 parallax-element parallax-up" data-parallax-speed="0.07">
+            <i class="fas fa-cogs"></i>
+        </div>
+        <div class="decoration-item item5 parallax-element parallax-left" data-parallax-speed="0.09">
+            <i class="fas fa-chart-pie"></i>
+        </div>
+    </div>
+    
+    <div class="container position-relative">
+        <!-- رأس الصفحة -->
+        <div class="row mb-5 text-center">
+            <div class="col-lg-8 mx-auto">
+                <div class="logo-3d mb-4">
+                    <div class="logo-glow"></div>
+                    <img src="{{ url_for('static', filename='img/telegram-logo.svg') }}" alt="Telegram Bot" class="float-animation position-relative" style="width: 80px; z-index: 2;">
+                </div>
+                <h1 class="mb-4 display-4 fw-bold text-gradient">مميزات بوت تلجرام المتطور</h1>
+                <p class="lead parallax-element parallax-up" data-parallax-speed="0.1">استكشف الإمكانيات المتقدمة للبوت واكتشف كيف يمكن أن يساعدك في إدارة قنواتك بكفاءة أكبر</p>
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <a href="{{ url_for('login') }}" class="btn btn-primary btn-neon">
+                        <i class="fas fa-sign-in-alt me-2"></i> تسجيل الدخول
+                    </a>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-primary btn-pulse">
+                        <i class="fas fa-home me-2"></i> الصفحة الرئيسية
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- جميع الميزات بالبطاقات -->
+        <div class="features-grid py-4">
+            <div class="section-heading mb-5 text-center">
+                <h2 class="fw-bold text-gradient-sm"><i class="fas fa-star me-2 pulse-element"></i> جميع المميزات في مكان واحد</h2>
+                <p class="lead">استعرض جميع الميزات الرائعة التي يقدمها البوت لإدارة قنوات تلجرام الخاصة بك</p>
+                <div class="custom-shape-divider mt-3"></div>
+            </div>
+            
+            <!-- الميزة 1: التوجيه الذكي -->
+            <div class="feature-card-wrapper card-3d mb-5 fade-in-element">
+                <div class="feature-card-large shadow-lg rounded-4">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5 order-lg-2">
+                            <div class="feature-image-large p-4 text-center">
+                                <div class="feature-image-container float-animation mb-3">
+                                    <div class="feature-icon-3d rounded-circle d-inline-flex align-items-center justify-content-center">
+                                        <i class="fas fa-exchange-alt fa-3x text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="feature-mockup bg-light p-3 rounded-4 shadow-sm">
+                                    <div class="d-flex mb-2 align-items-center">
+                                        <div class="channel-indicator d-flex align-items-center p-2 me-auto bg-primary text-white rounded">
+                                            <i class="fas fa-broadcast-tower me-2"></i>
+                                            <span>القناة المصدر</span>
+                                        </div>
+                                    </div>
+                                    <div class="message-example bg-white shadow-sm p-3 rounded mb-3">
+                                        <div class="message-content">
+                                            <p class="mb-1">مرحباً بكم في قناتنا! نتمنى لكم تجربة مفيدة...</p>
+                                            <div class="message-media bg-light p-2 rounded text-center">
+                                                <i class="fas fa-image text-primary me-1"></i> صورة
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="forwarding-arrows text-center mb-2">
+                                        <i class="fas fa-chevron-down text-primary fa-2x"></i>
+                                    </div>
+                                    <div class="d-flex mb-2 align-items-center">
+                                        <div class="channel-indicator d-flex align-items-center p-2 ms-auto bg-success text-white rounded">
+                                            <i class="fas fa-bullseye me-2"></i>
+                                            <span>القناة الهدف</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 order-lg-1">
+                            <div class="feature-content p-4">
+                                <div class="feature-badge mb-3">الميزة الرئيسية</div>
+                                <h3 class="feature-title mb-3">التوجيه الذكي للرسائل</h3>
+                                <p class="feature-description lead mb-4">قم بتوجيه الرسائل بين قنوات تلجرام المختلفة بشكل ذكي مع خيارات متعددة للتحكم في طريقة العرض والتوجيه.</p>
+                                <div class="feature-details">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-copy"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>وضع النسخ</h5>
+                                                    <p class="text-muted">نسخ الرسائل بشكل كامل دون ظهور مصدر الرسالة الأصلي.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-share"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>وضع التوجيه</h5>
+                                                    <p class="text-muted">إعادة توجيه الرسائل مع الإشارة إلى مصدرها الأصلي.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-bolt"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>سرعة التوجيه</h5>
+                                                    <p class="text-muted">التوجيه الفوري للرسائل بمجرد وصولها إلى القناة المصدر.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-tag"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>دعم جميع أنواع الوسائط</h5>
+                                                    <p class="text-muted">توجيه النصوص، الصور، الفيديوهات، الملفات وغيرها.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الميزة 2: فلترة المحتوى -->
+            <div class="feature-card-wrapper card-3d mb-5 fade-in-element">
+                <div class="feature-card-large shadow-lg rounded-4">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5">
+                            <div class="feature-image-large p-4 text-center">
+                                <div class="feature-image-container float-animation mb-3">
+                                    <div class="feature-icon-3d rounded-circle d-inline-flex align-items-center justify-content-center">
+                                        <i class="fas fa-filter fa-3x text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="feature-mockup bg-light p-3 rounded-4 shadow-sm">
+                                    <div class="content-filters mb-2">
+                                        <div class="filter-option d-flex align-items-center bg-white shadow-sm rounded p-2 mb-2">
+                                            <div class="filter-checkbox me-2">
+                                                <i class="fas fa-check-circle text-success"></i>
+                                            </div>
+                                            <div class="filter-label">
+                                                <strong>تصفية اللغة:</strong> العربية
+                                            </div>
+                                        </div>
+                                        <div class="filter-option d-flex align-items-center bg-white shadow-sm rounded p-2 mb-2">
+                                            <div class="filter-checkbox me-2">
+                                                <i class="fas fa-check-circle text-success"></i>
+                                            </div>
+                                            <div class="filter-label">
+                                                <strong>منع الكلمات:</strong> 
+                                                <span class="badge bg-danger">محظور1</span>
+                                                <span class="badge bg-danger">محظور2</span>
+                                            </div>
+                                        </div>
+                                        <div class="filter-option d-flex align-items-center bg-white shadow-sm rounded p-2 mb-2">
+                                            <div class="filter-checkbox me-2">
+                                                <i class="fas fa-times-circle text-danger"></i>
+                                            </div>
+                                            <div class="filter-label">
+                                                <strong>تصفية الوسائط:</strong>
+                                                <i class="fas fa-image ms-1"></i>
+                                                <i class="fas fa-video ms-1"></i>
+                                            </div>
+                                        </div>
+                                        <div class="filter-result text-center mt-3 bg-success text-white p-2 rounded">
+                                            <i class="fas fa-check-circle me-1"></i> تم تصفية المحتوى بنجاح
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="feature-content p-4">
+                                <div class="feature-badge mb-3">تصفية ذكية</div>
+                                <h3 class="feature-title mb-3">فلترة محتوى الرسائل</h3>
+                                <p class="feature-description lead mb-4">تحكم بشكل كامل في المحتوى الذي يتم توجيهه من خلال مجموعة متنوعة من الفلاتر الذكية التي تضمن جودة المحتوى.</p>
+                                <div class="feature-details">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-language"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>فلتر اللغة</h5>
+                                                    <p class="text-muted">تصفية الرسائل حسب اللغة المستخدمة مع دعم القائمة البيضاء والسوداء.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-ban"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>منع الكلمات المحظورة</h5>
+                                                    <p class="text-muted">إنشاء قائمة بالكلمات المحظورة لمنع توجيه الرسائل التي تحتوي عليها.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-photo-video"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>فلتر الوسائط</h5>
+                                                    <p class="text-muted">تحديد أنواع الوسائط المسموح بها (صور، فيديوهات، ملفات، روابط).</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-clone"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>منع الرسائل المكررة</h5>
+                                                    <p class="text-muted">التعرف التلقائي على الرسائل المكررة ومنع توجيهها مرة أخرى.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الميزة 3: تخصيص النصوص -->
+            <div class="feature-card-wrapper card-3d mb-5 fade-in-element">
+                <div class="feature-card-large shadow-lg rounded-4">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5 order-lg-2">
+                            <div class="feature-image-large p-4 text-center">
+                                <div class="feature-image-container float-animation mb-3">
+                                    <div class="feature-icon-3d rounded-circle d-inline-flex align-items-center justify-content-center">
+                                        <i class="fas fa-font fa-3x text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="feature-mockup bg-light p-3 rounded-4 shadow-sm">
+                                    <div class="message-customization">
+                                        <div class="message-transform mb-3">
+                                            <div class="message-before bg-white shadow-sm p-3 rounded mb-2">
+                                                <p class="mb-0">انضم إلينا في <span class="text-primary">القناة السرية</span> للحصول على https://t.me/secret_channel</p>
+                                            </div>
+                                            <div class="transform-arrow text-center mb-2">
+                                                <i class="fas fa-arrow-down text-primary"></i>
+                                            </div>
+                                            <div class="message-after bg-white shadow-sm p-3 rounded mb-2">
+                                                <p class="mb-0">انضم إلينا في <span class="text-primary">قناتنا الرسمية</span> للحصول على المزيد</p>
+                                            </div>
+                                        </div>
+                                        <div class="replacement-rules bg-white shadow-sm p-2 rounded text-end">
+                                            <small class="text-muted">"القناة السرية" ⟹ "قناتنا الرسمية"</small><br>
+                                            <small class="text-muted">https://t.me/* ⟹ <i>تم الإزالة</i></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 order-lg-1">
+                            <div class="feature-content p-4">
+                                <div class="feature-badge mb-3">تخصيص محتوى</div>
+                                <h3 class="feature-title mb-3">تخصيص النصوص والروابط</h3>
+                                <p class="feature-description lead mb-4">قم بتعديل محتوى الرسائل قبل توجيهها، واستبدل النصوص والروابط بشكل تلقائي لضمان التحكم الكامل في المحتوى.</p>
+                                <div class="feature-details">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-sync-alt"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>استبدال النصوص</h5>
+                                                    <p class="text-muted">استبدال كلمات أو عبارات محددة بنصوص أخرى قبل التوجيه.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-broom"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>تنظيف الروابط</h5>
+                                                    <p class="text-muted">إزالة أو تعديل الروابط بشكل تلقائي لمنع تسرب قنوات خارجية.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-puzzle-piece"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>نماذج مخصصة</h5>
+                                                    <p class="text-muted">إضافة محتوى ثابت أو نماذج نصية يتم دمجها مع الرسائل الموجهة.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-external-link-alt"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>إدارة الأزرار التفاعلية</h5>
+                                                    <p class="text-muted">التحكم في الأزرار التفاعلية مع إمكانية إزالتها أو تعديلها.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الميزة 4: أدوات التحكم -->
+            <div class="feature-card-wrapper card-3d mb-5 fade-in-element">
+                <div class="feature-card-large shadow-lg rounded-4">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5">
+                            <div class="feature-image-large p-4 text-center">
+                                <div class="feature-image-container float-animation mb-3">
+                                    <div class="feature-icon-3d rounded-circle d-inline-flex align-items-center justify-content-center">
+                                        <i class="fas fa-sliders-h fa-3x text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="feature-mockup bg-light p-3 rounded-4 shadow-sm">
+                                    <div class="control-panel">
+                                        <div class="control-toggle d-flex align-items-center justify-content-between bg-white shadow-sm p-2 rounded mb-2">
+                                            <span>تفعيل التوجيه</span>
+                                            <span class="badge bg-success">مفعل</span>
+                                        </div>
+                                        <div class="control-toggle d-flex align-items-center justify-content-between bg-white shadow-sm p-2 rounded mb-2">
+                                            <span>تأخير بين الرسائل</span>
+                                            <span>5 ثوانٍ</span>
+                                        </div>
+                                        <div class="control-toggle d-flex align-items-center justify-content-between bg-white shadow-sm p-2 rounded mb-2">
+                                            <span>جدولة النشر</span>
+                                            <span class="badge bg-primary">مفعل</span>
+                                        </div>
+                                        <div class="control-schedule bg-white shadow-sm p-2 rounded mb-2">
+                                            <div class="schedule-slots d-flex justify-content-around">
+                                                <div>8:00</div>
+                                                <div>12:00</div>
+                                                <div>16:00</div>
+                                                <div>20:00</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="feature-content p-4">
+                                <div class="feature-badge mb-3">إدارة متقدمة</div>
+                                <h3 class="feature-title mb-3">أدوات التحكم والجدولة</h3>
+                                <p class="feature-description lead mb-4">سيطر على عملية التوجيه بشكل كامل من خلال مجموعة متكاملة من أدوات التحكم، الجدولة، والتأخير.</p>
+                                <div class="feature-details">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-power-off"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>التفعيل/التعطيل السريع</h5>
+                                                    <p class="text-muted">تفعيل أو تعطيل التوجيه بشكل فوري عند الحاجة.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-hourglass-half"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>التأخير بين الرسائل</h5>
+                                                    <p class="text-muted">ضبط فترة زمنية بين توجيه كل رسالة لتجنب الإغراق.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>جدولة أوقات العمل</h5>
+                                                    <p class="text-muted">تحديد الأوقات التي يعمل فيها البوت وتوجيه الرسائل.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-clock"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>النشر المجدول</h5>
+                                                    <p class="text-muted">إعداد رسائل مجدولة ليتم نشرها في أوقات محددة مسبقاً.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الميزة 5: الترجمة التلقائية -->
+            <div class="feature-card-wrapper card-3d mb-5 fade-in-element">
+                <div class="feature-card-large shadow-lg rounded-4">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5 order-lg-2">
+                            <div class="feature-image-large p-4 text-center">
+                                <div class="feature-image-container float-animation mb-3">
+                                    <div class="feature-icon-3d rounded-circle d-inline-flex align-items-center justify-content-center">
+                                        <i class="fas fa-language fa-3x text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="feature-mockup bg-light p-3 rounded-4 shadow-sm">
+                                    <div class="translation-demo">
+                                        <div class="translation-original bg-white shadow-sm p-3 rounded mb-2">
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span class="badge bg-primary">English</span>
+                                                <small class="text-muted">المصدر</small>
+                                            </div>
+                                            <p class="mb-0">Welcome to our channel! Here you will find the latest news.</p>
+                                        </div>
+                                        <div class="transform-arrow text-center mb-2">
+                                            <i class="fas fa-arrow-down text-primary"></i>
+                                        </div>
+                                        <div class="translation-result bg-white shadow-sm p-3 rounded mb-2">
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span class="badge bg-success">العربية</span>
+                                                <small class="text-muted">الترجمة</small>
+                                            </div>
+                                            <p class="mb-0">مرحباً بكم في قناتنا! ستجدون هنا أحدث الأخبار.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 order-lg-1">
+                            <div class="feature-content p-4">
+                                <div class="feature-badge mb-3">ترجمة ذكية</div>
+                                <h3 class="feature-title mb-3">الترجمة التلقائية</h3>
+                                <p class="feature-description lead mb-4">قم بترجمة محتوى الرسائل بشكل تلقائي إلى اللغة المطلوبة قبل توجيهها، مما يتيح لك الوصول إلى جمهور أوسع.</p>
+                                <div class="feature-details">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-globe"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>دعم لغات متعددة</h5>
+                                                    <p class="text-muted">ترجمة المحتوى بين العديد من اللغات العالمية.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-magic"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>كشف اللغة التلقائي</h5>
+                                                    <p class="text-muted">التعرف التلقائي على لغة النص الأصلي قبل الترجمة.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-cogs"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>إعدادات مخصصة</h5>
+                                                    <p class="text-muted">تخصيص إعدادات الترجمة حسب احتياجاتك ومتطلبات قناتك.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-text-height"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>الحفاظ على التنسيق</h5>
+                                                    <p class="text-muted">الحفاظ على تنسيق النص وتخطيطه بعد الترجمة.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الميزة 6: الإحصائيات والتقارير -->
+            <div class="feature-card-wrapper card-3d mb-5 fade-in-element">
+                <div class="feature-card-large shadow-lg rounded-4">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5">
+                            <div class="feature-image-large p-4 text-center">
+                                <div class="feature-image-container float-animation mb-3">
+                                    <div class="feature-icon-3d rounded-circle d-inline-flex align-items-center justify-content-center">
+                                        <i class="fas fa-chart-line fa-3x text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="feature-mockup bg-light p-3 rounded-4 shadow-sm">
+                                    <div class="stats-demo">
+                                        <div class="stats-header bg-primary text-white p-2 rounded text-center mb-2">
+                                            <i class="fas fa-chart-bar me-1"></i> إحصائيات البوت
+                                        </div>
+                                        <div class="stats-row d-flex justify-content-between bg-white shadow-sm p-2 rounded mb-2">
+                                            <span>الرسائل الموجهة</span>
+                                            <span class="fw-bold">1,254</span>
+                                        </div>
+                                        <div class="stats-row d-flex justify-content-between bg-white shadow-sm p-2 rounded mb-2">
+                                            <span>الرسائل المفلترة</span>
+                                            <span class="fw-bold">128</span>
+                                        </div>
+                                        <div class="stats-row d-flex justify-content-between bg-white shadow-sm p-2 rounded mb-2">
+                                            <span>النصوص المستبدلة</span>
+                                            <span class="fw-bold">425</span>
+                                        </div>
+                                        <div class="stats-row d-flex justify-content-between bg-white shadow-sm p-2 rounded mb-2">
+                                            <span>وقت التشغيل</span>
+                                            <span class="fw-bold">97.8%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="feature-content p-4">
+                                <div class="feature-badge mb-3">تحليل البيانات</div>
+                                <h3 class="feature-title mb-3">الإحصائيات والتقارير</h3>
+                                <p class="feature-description lead mb-4">احصل على رؤية شاملة لأداء البوت من خلال إحصائيات دقيقة وتقارير تفصيلية حول نشاط الرسائل والتوجيه.</p>
+                                <div class="feature-details">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-tachometer-alt"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>لوحة معلومات مباشرة</h5>
+                                                    <p class="text-muted">عرض الإحصائيات في الوقت الفعلي على لوحة معلومات سهلة الاستخدام.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-history"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>سجل النشاط</h5>
+                                                    <p class="text-muted">تتبع جميع العمليات واستعراض سجل نشاط البوت بشكل تفصيلي.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-chart-pie"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>تقارير تحليلية</h5>
+                                                    <p class="text-muted">تحليل أداء البوت مع تقارير دورية مفصلة عن النشاط.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-point">
+                                                <div class="feature-point-icon">
+                                                    <i class="fas fa-bell"></i>
+                                                </div>
+                                                <div class="feature-point-content">
+                                                    <h5>إشعارات وتنبيهات</h5>
+                                                    <p class="text-muted">تلقي إشعارات حول أداء البوت والأحداث المهمة.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ميزات إضافية - جزء موجز -->
+            <div class="additional-features mb-5 fade-in-element">
+                <h3 class="text-center mb-4">ميزات إضافية</h3>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="mini-feature-card shadow-sm rounded-4 p-3 h-100">
+                            <div class="d-flex align-items-start">
+                                <div class="mini-feature-icon me-3">
+                                    <i class="fas fa-shield-alt text-primary"></i>
+                                </div>
+                                <div>
+                                    <h5>تحكم كامل بالوصول</h5>
+                                    <p class="text-muted mb-0">إدارة المشرفين والصلاحيات بشكل مرن مع تأمين عالي للبوت.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mini-feature-card shadow-sm rounded-4 p-3 h-100">
+                            <div class="d-flex align-items-start">
+                                <div class="mini-feature-icon me-3">
+                                    <i class="fas fa-terminal text-primary"></i>
+                                </div>
+                                <div>
+                                    <h5>أوامر متقدمة</h5>
+                                    <p class="text-muted mb-0">واجهة أوامر سهلة للتحكم بالبوت مباشرة من تطبيق تلجرام.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mini-feature-card shadow-sm rounded-4 p-3 h-100">
+                            <div class="d-flex align-items-start">
+                                <div class="mini-feature-icon me-3">
+                                    <i class="fas fa-plug text-primary"></i>
+                                </div>
+                                <div>
+                                    <h5>قابلية التوسع</h5>
+                                    <p class="text-muted mb-0">بنية مرنة تسمح بإضافة ميزات جديدة وتكامل مع خدمات أخرى.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- زر العودة للأعلى -->
+            <div class="text-center mb-4">
+                <button class="btn btn-primary btn-lg btn-neon back-to-top">
+                    <i class="fas fa-arrow-up me-2"></i> العودة للأعلى
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* تنسيقات خاصة بصفحة عرض المميزات */
+.features-showcase-bg {
+    background: linear-gradient(135deg, var(--primary-lightest) 0%, #ffffff 100%);
+    min-height: calc(100vh - 190px);
+    position: relative;
+    overflow: hidden;
+}
+
+/* تنسيقات عناصر الزخرفة */
+.parallax-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.decoration-item {
+    position: absolute;
+    font-size: 4rem;
+    color: rgba(13, 110, 253, 0.1);
+    z-index: 0;
+    transition: transform 0.1s ease-out;
+}
+
+.item1 {
+    top: 15%;
+    left: 10%;
+}
+
+.item2 {
+    top: 25%;
+    right: 15%;
+}
+
+.item3 {
+    bottom: 30%;
+    right: 10%;
+}
+
+.item4 {
+    bottom: 20%;
+    left: 20%;
+}
+
+.item5 {
+    top: 60%;
+    left: 50%;
+}
+
+/* تنسيقات الشعار الثلاثي الأبعاد */
+.logo-3d {
+    position: relative;
+    display: inline-block;
+    perspective: 1000px;
+}
+
+.logo-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(13, 110, 253, 0.3) 0%, rgba(13, 110, 253, 0) 70%);
+    border-radius: 50%;
+    z-index: 1;
+    animation: pulse 3s infinite alternate;
+}
+
+.custom-shape-divider {
+    width: 150px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--primary), transparent);
+    margin: 0 auto;
+}
+
+/* تنسيقات بطاقات الميزات */
+.feature-card-wrapper {
+    position: relative;
+    transition: all 0.5s ease;
+}
+
+.feature-card-large {
+    background-color: white;
+    overflow: hidden;
+}
+
+.feature-badge {
+    display: inline-block;
+    background-color: rgba(13, 110, 253, 0.1);
+    color: var(--primary);
+    font-size: 0.8rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 50px;
+    font-weight: 600;
+}
+
+.feature-title {
+    color: var(--gray-800);
+    font-weight: 700;
+}
+
+.text-gradient-sm {
+    background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+/* تنسيقات أيقونات الميزات */
+.feature-icon-3d {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease;
+}
+
+.feature-icon-3d:hover {
+    transform: translateY(-10px) rotate(10deg);
+    box-shadow: 0 15px 30px rgba(13, 110, 253, 0.2);
+}
+
+.feature-mockup {
+    transition: all 0.5s ease;
+}
+
+.feature-mockup:hover {
+    transform: scale(1.03);
+}
+
+/* تنسيقات نقاط التفاصيل */
+.feature-point {
+    display: flex;
+    align-items: start;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.feature-point:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+    transform: translateX(5px);
+}
+
+.feature-point-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(13, 110, 253, 0.1);
+    color: var(--primary);
+    border-radius: 50%;
+    margin-right: 1rem;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.feature-point:hover .feature-point-icon {
+    transform: scale(1.1) rotate(10deg);
+    background-color: rgba(13, 110, 253, 0.2);
+}
+
+/* تنسيقات البطاقات الصغيرة */
+.mini-feature-card {
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.mini-feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-color: rgba(13, 110, 253, 0.2);
+}
+
+.mini-feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(13, 110, 253, 0.1);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* زر العودة للأعلى */
+.back-to-top {
+    transition: all 0.3s ease;
+}
+
+.back-to-top:hover {
+    transform: translateY(-5px);
+}
+
+/* تأثيرات الظهور عند التمرير */
+.fade-in-element {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-element.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* تأثيرات حركية */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // تهيئة تأثير ظهور العناصر عند التمرير
+    const fadeElements = document.querySelectorAll('.fade-in-element');
+    
+    const fadeInObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    fadeElements.forEach(element => {
+        fadeInObserver.observe(element);
+    });
+    
+    // زر العودة للأعلى
+    const backToTopButton = document.querySelector('.back-to-top');
+    if (backToTopButton) {
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+    
+    // تهيئة تأثيرات البطاقات ثلاثية الأبعاد
+    init3DCardEffects();
+    
+    // إضافة تأثيرات تتبع المؤشر للعناصر المتوازية
+    document.addEventListener('mousemove', function(e) {
+        const parallaxElements = document.querySelectorAll('.parallax-element');
+        
+        parallaxElements.forEach(element => {
+            const speed = parseFloat(element.getAttribute('data-parallax-speed')) || 0.1;
+            const direction = element.classList.contains('parallax-left') ? -1 :
+                             element.classList.contains('parallax-right') ? 1 :
+                             element.classList.contains('parallax-up') ? 0 : 0;
+            
+            const x = (window.innerWidth / 2 - e.pageX) * speed * direction;
+            const y = (window.innerHeight / 2 - e.pageY) * speed;
+            
+            element.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    });
+});
+</script>
+{% endblock %}
