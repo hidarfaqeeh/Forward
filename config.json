@@ -1,0 +1,62 @@
+{
+    "bot_token": "7923981264:AAHAsxU-VwLGMRIEjOudpmyRqa57rNgEBok",
+    "source_channel": "-1001861242334",
+    "target_channel": "-1001470989107",
+    "admin_users": [
+        6556918772,
+        125647359
+    ],
+    "developer_id": "6556918772",
+    "forward_mode": "forward",
+    "media_filters": {
+        "text": true,
+        "photo": false,
+        "video": true,
+        "document": true,
+        "audio": true,
+        "voice": true,
+        "video_note": true,
+        "animation": true,
+        "sticker": true,
+        "poll": true,
+        "game": true,
+        "contact": true,
+        "location": true,
+        "venue": true
+    },
+    "text_replacements": [
+        {
+            "pattern": "\u0646\u0635",
+            "replacement": "\u0646\u0635 \u0628\u062f\u064a\u0644"
+        }
+    ],
+    "whitelist_enabled": true,
+    "forwarding_enabled": true,
+    "whitelist": [
+        "\u0645\u0631\u062d\u0628\u0627",
+        "\u0647\u0644\u0627",
+        "\u0633\u0644\u0627\u0645"
+    ],
+    "auto_translate_enabled": false,
+    "translate_source": "auto",
+    "translate_target": "ar",
+    "forwarded_filter_enabled": false,
+    "duplicate_filter_enabled": false,
+    "inline_button_filter_enabled": false,
+    "language_filter_enabled": false,
+    "language_filter_mode": "whitelist",
+    "language_filter_language": "ar",
+    "link_filter_enabled": false,
+    "autopost_enabled": false,
+    "scheduled_posts": [],
+    "working_hours_enabled": false,
+    "working_hours_start": 9,
+    "working_hours_end": 21,
+    "plain_text_conversion_enabled": false,
+    "bold_text_conversion_enabled": false,
+    "button_removal_enabled": false,
+    "delay_enabled": false,
+    "delay_seconds": 5,
+    "char_limit_enabled": false,
+    "char_limit_count": 1000
+}
