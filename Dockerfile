@@ -1,4 +1,3 @@
-Process terminated with exit code 0# استخدم صورة بايثون خفيفة
 FROM python:3.11-slim
 
 # إعداد بيئة العمل
